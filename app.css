@@ -21,7 +21,7 @@ h3 {
 .burger-menu {
     display: flex;
     flex-direction: column;
-    width: 30px;
+    width: 60px;
     cursor: pointer;
 }
 
