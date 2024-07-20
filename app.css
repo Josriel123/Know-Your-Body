@@ -23,6 +23,7 @@ h3 {
     flex-direction: column;
     width: 30px;
     cursor: pointer;
+    margin-left: 30px;
 }
 
 .line {
