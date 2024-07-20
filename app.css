@@ -7,7 +7,6 @@ h3 {
 }
 
 body {
-    color: white;
     font-family: Arial, sans-serif;
     background-color : black
 }
@@ -28,7 +27,7 @@ body {
 
 .nav-menu {
     display: none;
-    background-color: red;
+    background-color: black;
     padding: 10px;
 }
 
@@ -43,5 +42,5 @@ body {
 
 .nav-menu a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
