@@ -7,5 +7,41 @@ h3 {
 }
 
 body {
+    color: white;
+    font-family: Arial, sans-serif;
     background-color : black
+}
+
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.line {
+    height: 3px;
+    background-color: white;
+    margin: 4px;
+}
+
+.nav-menu {
+    display: none;
+    background-color: red;
+    padding: 10px;
+}
+
+.nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-menu li { 
+    margin: 10px 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: black;
 }
