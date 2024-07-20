@@ -1,14 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white; /* This will set the default text color to white */
+}
+
 h1 {
-    color : white
+    color: white;
 }
 
 h3 {
-    color : white
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color : black
+    color: white;
 }
 
 .header {
@@ -22,21 +23,20 @@ body {
     flex-direction: column;
     width: 30px;
     cursor: pointer;
-    margin: 20px;
 }
 
 .line {
     height: 3px;
     background-color: white;
-    margin: 4px;
+    margin: 4px 0;
 }
 
 .company-name {
     margin-left: 20px;
     font-size: 20px;
     font-weight: bold;
-    color: white;
 }
+
 .nav-menu {
     display: none;
     background-color: black;
@@ -48,7 +48,7 @@ body {
     padding: 0;
 }
 
-.nav-menu li { 
+.nav-menu li {
     margin: 10px 0;
 }
 
