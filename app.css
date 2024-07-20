@@ -21,9 +21,11 @@ h3 {
 .burger-menu {
     display: flex;
     flex-direction: column;
-    width: 30px;
+    width: 50x;
+    height: 20px;
     cursor: pointer;
     margin-left: 30px;
+    margin-top: 30px;
 }
 
 .line {
