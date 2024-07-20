@@ -11,6 +11,12 @@ body {
     background-color : black
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
 .burger-menu {
     display: flex;
     flex-direction: column;
