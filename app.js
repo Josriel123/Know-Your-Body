@@ -3,6 +3,6 @@ document.getElementById('burgerMenu').addEventListener('click', function() {
     if (navMenu.style.display === 'block') {
         navMenu.style.display = 'none';
     } else {
-        naveMenu.style.display = 'block';
+        navMenu.style.display = 'block';
     }
 });
