@@ -25,6 +25,11 @@ body {
     margin: 4px;
 }
 
+.company-name {
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
 .nav-menu {
     display: none;
     background-color: black;
