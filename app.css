@@ -40,21 +40,19 @@ h3 {
     font-weight: bold;
     font-family: 'impact' , sans-serif;
     letter-spacing: 3px;
-    flex-direction: column;
     display: flex;
-    width: 1000px;
+    width: 100%;
+    text-align: center;
 }
 
 .know {
-    margin-bottom: 1px;
     width: 100%;
-    text-align: justify;
+    display: inline-block;
 }
 
 .your-body {
-    margin-top: 1px;
     width: 100%;
-    text-align: justify;
+    display: inline-block;
 }
 
 .nav-menu {
