@@ -38,10 +38,11 @@ h3 {
     margin-top: 100px;
     font-size: 30px;
     font-weight: bold;
-    font-family: 'VAG Rounded', sans-serif;
+    font-family: 'impact' , sans-serif;
     letter-spacing: 3px;
     flex-direction: column;
     display: flex;
+    width: 30%;
 }
 
 .know {
