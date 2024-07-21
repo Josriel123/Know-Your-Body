@@ -35,11 +35,13 @@ h3 {
 
 .company-name {
     margin-left: 25px;
-    margin-top: 50px;
+    margin-top: 100px;
     font-size: 30px;
     font-weight: bold;
     font-family: 'Impact', sans-serif;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
+    flex-direction: column;
+    display: flex;
 }
 
 .know {
