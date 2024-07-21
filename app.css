@@ -1,9 +1,12 @@
+
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #111111;
+    font-family: Arial, sans-serif; /* This changes the overall font of the page */
+    background-color: #111111; /* This changes the background color of the page */
     color: white; /* This will set the default text color to white */
 }
 
+/* Sets the position of the header */
 .header {
     display: flex;
     align-items: center;
@@ -15,12 +18,12 @@ body {
 .burger-menu {
     display: flex;
     flex-direction: column;
-    width: 70px;
+    width: 70px; /* Changes the width of the burger menu*/
     cursor: pointer;
 }
 
 .line {
-    height: 12px;
+    height: 12px; /* Changes the heiight of each lines of the burger menu */
     background-color: white;
     margin: 4px 0;
 }
