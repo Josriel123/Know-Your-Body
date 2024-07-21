@@ -47,13 +47,14 @@ h3 {
 
 .know {
     margin-bottom: 1px;
-    width: 100%
-    text-align: justify
+    width: 100%;
+    text-align: justify;
 }
 
 .your-body {
     margin-top: 1px;
-    width: 100%
+    width: 100%;
+    text-align: justify;
 }
 
 .nav-menu {
