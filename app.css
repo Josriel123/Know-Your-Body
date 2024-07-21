@@ -34,6 +34,7 @@ h3 {
 }
 
 .company-name {
+    margin-left: 20px;
     font-size: 30px;
     font-weight: bold;
     font-family: 'impact' , sans-serif;
@@ -45,6 +46,8 @@ h3 {
 
 .know {
     display: inline-block;
+    width: 100%;
+    
 }
 
 .your-body {
