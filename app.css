@@ -41,7 +41,7 @@ h3 {
     letter-spacing: 3px;
     display: flex;
     width: 10%;
-    text-align: left;
+    text-align: center;
 }
 
 .know {
@@ -52,6 +52,7 @@ h3 {
 
 .your-body {
     display: inline-block;
+    width: 100%;
 }
 
 .nav-menu {
