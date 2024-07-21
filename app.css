@@ -35,22 +35,12 @@ h3 {
 
 .company-name {
     margin-left: 20px;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     font-family: 'impact' , sans-serif;
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
-}
-
-.know {
-    width: 100%;
-
-}
-
-.your-body {
-
-    width: 100%;
 }
 
 .nav-menu {
