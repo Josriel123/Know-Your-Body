@@ -61,6 +61,7 @@ body {
 .slogan-container {
     margin-left: 6.6%; 
     text-align: left;
+    max-width: 20%;
 }
 .slogan {
     font-size: 104px;
