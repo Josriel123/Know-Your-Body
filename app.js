@@ -1,8 +1,8 @@
 document.getElementById('burgerMenu').addEventListener('click', function() {
     var navMenu = document.getElementById('navMenu');
-    if (navMenu.style.display === 'block') {
-        navMenu.style.display = 'none';
+    if (navMenu.style.left === '0px') {
+        navMenu.style.left = '-250px'; //Hide the menu
     } else {
-        navMenu.style.display = 'block';
+        navMenu.style.left = '0px'; // Showw the menu
     }
 });
