@@ -57,3 +57,11 @@ body {
     text-decoration: none;
     color: white;
 }
+
+.slogan {
+    font-size: 52px;
+}
+
+.slogan-description {
+    font-size: 25px;
+}
