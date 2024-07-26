@@ -11,7 +11,7 @@ body {
     justify-content: flex-start;
     align-items: left;
     margin-left: 7%;
-    margin-top: 5%;
+    margin-top: 7%;
     
 }
 
@@ -59,8 +59,7 @@ body {
 }
 
 .slogan-container {
-    padding: 13px;
-    margin-left: 100px; 
+    margin-left: 7%; 
     text-align: left;
 }
 .slogan {
