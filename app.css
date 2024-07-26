@@ -62,15 +62,18 @@ body {
     margin-left: 6.6%; 
     text-align: left;
     max-width: 40%;
-    max-height: 10%;
     font-family: 'Calibri Light', sans-serif;
 }
 .slogan {
     font-size: 130px;
     font-weight: bold;
+    padding: 0;
+    margin: 0;
 }
 
 .slogan-description {
     font-size: 40px;
     margin-left: 0.4%;
+    padding: 0;
+    margin: 0;
 }
