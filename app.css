@@ -58,10 +58,15 @@ body {
     color: white;
 }
 
+.slogan-container {
+    padding: 20px;
+    margin-left: 100px;
+}
 .slogan {
-    font-size: 52px;
+    font-size: 104px;
+    font-weight: bold;
 }
 
 .slogan-description {
-    font-size: 25px;
+    font-size: 40px;
 }
