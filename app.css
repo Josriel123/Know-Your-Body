@@ -2,6 +2,8 @@ body {
     font-family: Arial, sans-serif; /* This changes the overall font of the page */
     background-color: #111111; /* This changes the background color of the page */
     color: white; /* This will set the default text color to white */
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -9,7 +11,7 @@ body {
 .header {
     display: flex;
     justify-content: flex-start;
-    align-items: left;
+    align-items: center;
     margin-left: 7%;
     margin-top: 7%;
     
@@ -18,7 +20,7 @@ body {
 .burger-menu {
     display: flex;
     flex-direction: column;
-    width: 70px; /* Changes the width of the burger menu*/
+    width: 2.73%; /* Changes the width of the burger menu*/
     cursor: pointer;
 }
 
