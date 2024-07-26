@@ -66,14 +66,13 @@ body {
 }
 .slogan {
     font-size: 120px;
-    font-weight: bold;
-    margin-top: 10%;
+    margin-top: 12%;
     margin-bottom: 0;
 }
 
 .slogan-description {
     font-size: 40px;
     margin-left: 0.4%;
-    margin: 0;
-    padding: 0;
+    margin-top: 7%;
+ 
 }
