@@ -45,8 +45,8 @@ body {
 .nav-menu {
     position: fixed;
     top: 0;
-    left: -40%; /* Hide off-screen*/
-    width: 40%;
+    left: -35%; /* Hide off-screen*/
+    width: 35%;
     height: 100vh; /* Full height*/
     background-color: black;
     padding: 10px;
