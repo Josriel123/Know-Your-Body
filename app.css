@@ -4,9 +4,6 @@ body {
     font-family: Arial, sans-serif; /* This changes the overall font of the page */
     background-color: #111111; /* This changes the background color of the page */
     color: white; /* This will set the default text color to white */
-    padding: 20px;
-    margin-left: 100px;
-    margin-top: 100px;
 }
 
 
@@ -14,6 +11,9 @@ body {
 .header {
     display: flex;
     align-items: center;
+    padding: 20px;
+    margin-left: 100px;
+    margin-top: 100px;
 }
 
 .burger-menu {
@@ -60,8 +60,8 @@ body {
 }
 
 .slogan-container {
-    /*padding: 10px;
-    margin-left: 100px; */
+    padding: 10px;
+    margin-left: 100px; 
 }
 .slogan {
     font-size: 104px;
