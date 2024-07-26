@@ -20,7 +20,7 @@ body {
 .burger-menu {
     display: flex;
     flex-direction: column;
-    width: 2.73%; /* Changes the width of the burger menu*/
+    width: 5%; /* Changes the width of the burger menu*/
     cursor: pointer;
 }
 
