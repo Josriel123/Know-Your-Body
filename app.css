@@ -22,6 +22,7 @@ body {
     flex-direction: column;
     width: 4.5%; /* Changes the width of the burger menu*/
     cursor: pointer;
+    z-index: 11;
 }
 
 .line {
@@ -38,18 +39,19 @@ body {
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
+    z-index: 11;
 }
 
 .nav-menu {
     position: fixed;
     top: 0;
-    left: -250px; /* Hide off-screen*/
-    width: 250px;
+    left: -410px; /* Hide off-screen*/
+    width: 400px;
     height: 100vh; /* Full height*/
     background-color: black;
     padding: 10px;
     transition: left 0.3s ease; /* Smooth sliding effect*/
-    z-index: 1000; /*  Ensure it's above other content*/
+    z-index: 10; /*  Ensure it's above other content*/
 }
 
 .nav-menu ul {
