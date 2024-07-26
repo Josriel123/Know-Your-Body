@@ -9,8 +9,8 @@ body {
 .header {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    margin-left: 10%;
+    align-items: left;
+    margin-left: 7%;
     margin-top: 100px;
     
 }
