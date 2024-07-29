@@ -45,13 +45,9 @@ body {
 .nav-menu {
     position: fixed;
     top: 0;
-    left: -32%; /* Hide off-screen*/
-    width: 30%;
-    height: 100vh; /* Full height*/
     background-color: black;
     padding: 10px;
-    transition: left 0.3s ease; /* Smooth sliding effect*/
-    z-index: 10; /*  Ensure it's above other content*/
+    width: 100%;
 }
 
 .nav-menu ul {
