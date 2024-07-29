@@ -15,18 +15,6 @@ body {
     
 }
 
-.burger-menu {
-    display: flex;
-    flex-direction: column;
-    width: 4.5%; /* Changes the width of the burger menu*/
-    cursor: pointer;
-}
-
-.line {
-    height: 12px; /* Changes the heiight of each lines of the burger menu  */
-    background-color: white;
-    margin: 4px 0;
-}
 
 .company-name {
     margin-left: 20px;
@@ -42,7 +30,7 @@ body {
 .nav-menu {
     position: fixed;
     top: 0;
-    background-color: black;
+    background-color: #111111;
     padding: 10px;
     width: 100%;
 }
