@@ -12,8 +12,6 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 7%;
-    margin-top: 7%;
     
 }
 
@@ -43,7 +41,7 @@ body {
 }
 
 .nav-menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     background-color: black;
     padding: 10px;
