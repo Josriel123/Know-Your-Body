@@ -60,12 +60,14 @@ body {
 }
 .slogan {
     font-size: 120px;
-    margin-top: 15%;
+    margin-top: 20%;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 .slogan-description {
     font-size: 40px;
-    margin-top: 10%;
+    margin-top: 20%;
+    font-weight: lighter;
  
 }
