@@ -25,6 +25,9 @@ body {
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
+}
+
+.company-name a {
     color: white;
 }
 
