@@ -25,6 +25,7 @@ body {
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
+    color: white;
 }
 
 .nav-menu {
