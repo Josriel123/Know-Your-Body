@@ -16,14 +16,14 @@ body {
 }
 
 .company-name {
-    margin-left: 20px;
+    margin-left: 5%;
+    width: 10%;
     font-size: 28px;
     font-weight: bold;
     font-family: 'impact' , sans-serif;
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
-    z-index: 11;
 }
 
 .nav-menu {
