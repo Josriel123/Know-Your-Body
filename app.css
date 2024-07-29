@@ -14,7 +14,7 @@ body {
     align-items: center;
     margin-left: 8%;
     margin-top: 2%;
-    background-color: white;
+    
 }
 
 .company-name {
@@ -25,7 +25,6 @@ body {
     letter-spacing: 3px;
     display: flex;
     flex-direction: column;
-    color: #111111;
 }
 
 .nav-menu {
@@ -43,12 +42,12 @@ body {
 }
 
 .nav-menu li {
-    margin: 10px 0;
+    margin: 10px 5px;
 }
 
 .nav-menu a {
     text-decoration: none;
-    color: #111111;
+    color: white;
 }
 
 .slogan-container {
