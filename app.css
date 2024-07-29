@@ -29,6 +29,7 @@ body {
 
 .company-name a {
     color: white;
+    text-decoration: none;
 }
 
 .nav-menu {
