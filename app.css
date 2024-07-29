@@ -57,17 +57,17 @@ body {
     text-align: left;
     max-width: 40%;
     font-family: 'Malgun Gothic Semil', sans-serif;
+    margin-top: 25%;
 }
 .slogan {
     font-size: 115px;
-    margin-top: 25%;
     margin-bottom: 0;
     font-weight: bold;
 }
 
 .slogan-description {
     font-size: 40px;
-    margin-top: 30%;
+    margin-top: 20%;
     font-weight: lighter;
  
 }
