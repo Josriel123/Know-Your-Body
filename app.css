@@ -15,7 +15,6 @@ body {
     
 }
 
-
 .company-name {
     margin-left: 20px;
     font-size: 28px;
@@ -28,7 +27,7 @@ body {
 }
 
 .nav-menu {
-    position: fixed;
+    position: relative;
     top: 0;
     background-color: #111111;
     padding: 10px;
