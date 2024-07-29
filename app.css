@@ -43,7 +43,7 @@ body {
 }
 
 .nav-menu {
-    position: fixed;
+    position: absolute;
     top: 0;
     background-color: black;
     padding: 10px;
