@@ -27,7 +27,7 @@ body {
 }
 
 .nav-menu {
-    position: relative;
+    position: fixed;
     top: 0;
     background-color: #111111;
     padding: 10px;
