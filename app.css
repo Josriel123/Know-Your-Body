@@ -56,6 +56,10 @@ body {
     font-size: 20px;
 }
 
+.nav-menu a:hover {
+    color: aquamarine;
+}
+
 .slogan-container {
     margin-left: 7%; 
     text-align: left;
