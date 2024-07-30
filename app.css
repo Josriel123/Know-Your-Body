@@ -82,9 +82,6 @@ body {
     margin-left: 30%;
 }
 
-.start {
-    margin-bottom: 100vh;
-}
 
 .start-button {
     position: fixed;
@@ -108,5 +105,5 @@ body {
     justify-content: center;
     align-items: center;
     background-color: aqua;
-    height: 100vh;
+    height: 100%;
 }
