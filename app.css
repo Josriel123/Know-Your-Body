@@ -94,3 +94,14 @@ body {
     font-size: 16px;
     border-radius: 43%;
 }
+
+.start-button:hover {
+    background-color: aquamarine;
+}
+
+.general-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+}
