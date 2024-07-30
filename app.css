@@ -6,6 +6,19 @@ body {
     padding: 0;
 }
 
+.header, .slogan-container, .start {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.header, .slogan-container, .start {
+    display: block;
+}
+
+.header.hidden, .slogan-container.hidden, .start.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 
 /* Sets the position of the header */
 .header {
