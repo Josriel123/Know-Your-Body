@@ -90,7 +90,7 @@ body {
     padding: 10px 20px;
     background-color: white;
     color: black;
-    border: 2px solid black;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 5px;
 }
