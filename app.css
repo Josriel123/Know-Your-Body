@@ -82,3 +82,7 @@ body {
     margin-left: 30%;
 }
 
+.start {
+    align-items: center;
+    width: 100%;
+}
