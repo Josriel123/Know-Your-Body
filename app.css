@@ -100,13 +100,13 @@ body {
 }
 
 .start-button:hover {
-    background-color: grey;
+    background-color: aquamarine;
 }
 
 .general-section {
     display: none;
     justify-content: center;
     align-items: center;
-    background-color: aqua;
+    background-color: grey;
     height: 100vh;
 }
