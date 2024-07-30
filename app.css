@@ -83,7 +83,7 @@ body {
 }
 
 .start {
-    margin-bottom: 9%;
+    margin-bottom: 8%;
 }
 
 .start-button {
@@ -104,6 +104,7 @@ body {
 }
 
 .general-section {
+    margin-top: 1%;
     display: none;
     justify-content: center;
     align-items: center;
