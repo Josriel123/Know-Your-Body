@@ -1,3 +1,4 @@
-document.getElementById('scrollButton').addEventListener('click', function() {
-    document.getElementById('target-section').scrollIntoView({ behavior: 'smooth' });
+document.getElementById('startButton').addEventListener('click', function() {
+    document.getElementById('generalSection').style.display = 'flex';
+    document.getElementById('generalSection').scrollIntoView({ behavior: 'smooth' });
 });

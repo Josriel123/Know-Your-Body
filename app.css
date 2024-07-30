@@ -83,7 +83,7 @@ body {
 }
 
 .start-button {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -100,8 +100,9 @@ body {
 }
 
 .general-section {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     background-color: aqua;
+    height: 100vh;
 }
