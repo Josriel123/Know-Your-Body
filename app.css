@@ -83,6 +83,5 @@ body {
 }
 
 .start {
-    align-items: center;
-    width: 100%;
+    margin-left: 50%;
 }
