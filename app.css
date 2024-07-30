@@ -83,7 +83,7 @@ body {
 }
 
 .start {
-    margin-bottom: 8%;
+    margin-bottom: 100vh;
 }
 
 .start-button {
@@ -109,5 +109,4 @@ body {
     align-items: center;
     background-color: grey;
     height: 100vh;
-    margin-top: 100hv;
 }
