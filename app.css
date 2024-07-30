@@ -82,9 +82,12 @@ body {
     margin-left: 30%;
 }
 
+.start {
+    margin-bottom: 50%;
+}
 
 .start-button {
-    position: fixed;
+    position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
