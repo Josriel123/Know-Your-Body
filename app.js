@@ -8,12 +8,14 @@ document.getElementById('startButton').addEventListener('click', function() {
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    render.gammaOutput = true;
     container.appendChild(renderer.domElement);
 
     // Add a light
-    var light = new THREE.AmbientLight(0x404040);
+    var light = new THREE.AmbientLight("#85b2cd");
+    var directionalLight = new THREE.DirectionalLight("#c1582d", 1);
+    light.position.set(0, -70, 100).normalize();
     scene.add(light);
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     scene.add(directionalLight);
 
     // Load the model
@@ -24,7 +26,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         scene.add(model);
 
         // Adjust model scale and position if needed
-        model.scale.set(1, 1, 1);
+        model.scale.set(2, 2, 2);
         model.position.set(0, 0, 0);
 
         // Render loop
