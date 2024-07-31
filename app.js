@@ -1,7 +1,5 @@
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, model;
-
-import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js"
  
 document.getElementById('startButton').addEventListener('click', function() {
     var generalSection = document.getElementById('generalSection');
