@@ -27,7 +27,7 @@ document.getElementById('startButton').addEventListener('click', function() {
 
         // Adjust model scale and position if needed
         model.scale.set(2, 2, 2);
-        model.position.set(0, 2, 0);
+        model.position.set(0, -5, 0);
 
         // Render loop
         var animate = function() {
