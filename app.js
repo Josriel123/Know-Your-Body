@@ -1,5 +1,5 @@
 // Declare variables outside the function to maintain state
-let scene, camera, renderer, model;
+let scene, camera, renderer, model; controls
  
 document.getElementById('startButton').addEventListener('click', function() {
     var generalSection = document.getElementById('generalSection');
@@ -16,6 +16,9 @@ document.getElementById('startButton').addEventListener('click', function() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.gammaOutput = true;
         container.appendChild(renderer.domElement);
+
+        controls = new THREE.OrbitControls(camera);
+        controls.addEventListener("change", renderer);
 
         // Add a light
         var light = new THREE.AmbientLight("#85b2cd");
@@ -76,7 +79,6 @@ document.getElementById('startButton').addEventListener('click', function() {
             // Render loop
             function animate() {
                 requestAnimationFrame(animate);
-                model.rotation.y += 0.01; // Rotate model
                 renderer.render(scene, camera);
             }
             animate();
