@@ -19,6 +19,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     // Load the model
     var loader = new THREE.GLTFLoader();
     loader.load('Human 3D Models/scene.gltf', function(gltf) {
+        console.log('Model loaded successfully'); // Debug log
         var model = gltf.scene;
         scene.add(model);
 
@@ -34,7 +35,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         };
         animate();
     }, undefined, function(error) {
-        console.error(error);
+        console.error('Error loading model:', error);
     });
 
     // Camera position
