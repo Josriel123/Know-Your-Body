@@ -52,7 +52,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         camera.position.z = 5;
 
         // Add OrbitControls
-        controls = new OrbitControls(camera, renderer.domElement);
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
 
         // Handle window resize
         window.addEventListener('resize', function() {
