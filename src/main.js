@@ -109,8 +109,8 @@ document.getElementById('startButton').addEventListener('click', function() {
 
 
             // Adjust model scale and position if needed
-            model.scale.set(2, 2, 2);
-            model.position.set(0, -2, 0);
+            model.scale.set(3, 3, 3);
+            model.position.set(0, -2.7, 0);
 
             // Render loop
             function animate() {
