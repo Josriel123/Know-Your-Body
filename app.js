@@ -14,7 +14,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     // Add a light
     var light = new THREE.AmbientLight("#85b2cd");
     var directionalLight = new THREE.DirectionalLight("#c1582d", 1);
-    light.position.set(0, -70, 100).normalize();
+    directionalLight.position.set(0, -70, 100).normalize();
     scene.add(light);
     scene.add(directionalLight);
 
