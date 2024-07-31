@@ -1,5 +1,5 @@
 // Declare variables outside the function to maintain state
-let scene, camera, renderer, model; controls
+let scene, camera, renderer, model, controls; 
  
 document.getElementById('startButton').addEventListener('click', function() {
     var generalSection = document.getElementById('generalSection');
