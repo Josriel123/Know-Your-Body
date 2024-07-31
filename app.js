@@ -18,7 +18,7 @@ document.getElementById('startButton').addEventListener('click', function() {
 
     // Load the model
     var loader = new THREE.GLTFLoader();
-    loader.load('Human 3D Models/model.gltf', function(gltf) {
+    loader.load('Human 3D Models/scene.gltf', function(gltf) {
         var model = gltf.scene;
         scene.add(model);
 
