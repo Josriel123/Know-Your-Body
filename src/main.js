@@ -19,15 +19,31 @@ document.getElementById('startButton').addEventListener('click', function() {
         renderer = new THREE.WebGLRenderer({alpha: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.gammaOutput = true;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
         // Add a light
-        var light = new THREE.AmbientLight("#85b2cd");
-        var directionalLight = new THREE.DirectionalLight("#c1582d", 1);
-        directionalLight.position.set(10, 10, 10).normalize();
-        directionalLight.castShadow = true;
-        scene.add(light);
-        scene.add(directionalLight);
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(ambientLight);
+
+        var topLight = new THREE.DirectionalLight("#e6d9c6", 1.5);
+        topLight.position.set(0, 500, 0);
+        topLight.castShadow = true;
+        topLight.shadow.mapSize.width = 1024;
+        topLight.shadow.mapSize.height = 1024;
+        topLight.shadow.camera.near = 0.5;
+        topLight.shadow.camera.far = 50;
+        scene.add(topLight);
+
+        var cameraLight = new THREE.DirectionalLight(0xadd8e6, 1);
+        cameraLight.position.set(0, 500, 0);
+        cameraLight.castShadow = true;
+        cameraLight.shadow.mapSize.width = 1024;
+        cameraLight.shadow.mapSize.height = 1024;
+        cameraLight.shadow.camera.near = 0.5;
+        cameraLight.shadow.camera.far = 50;
+        scene.add(cameraLight)
 
         // Load the model
         var loader = new GLTFLoader();
@@ -37,18 +53,24 @@ document.getElementById('startButton').addEventListener('click', function() {
                 scene.remove(model); // Remove previous model if it exists
             }
             model = gltf.scene;
+            model.traverse(function (child) {
+                if (child.isMesh) {
+                    child.castShadow = true; // Enable shadows for the model
+                    child.receiveShadow = true; // Enable shadows to be received by the model
+                }
+            });            
             scene.add(model);
 
             // Adjust model scale and position if needed
-            model.scale.set(2, 2, 2);
-            model.position.set(0, -2, 0);
+            model.scale.set(3, 3, 3);
+            model.position.set(0, -2.7, 0);
 
             // Render loop
             function animate() {
                 requestAnimationFrame(animate);
                 renderer.render(scene, camera);
-                directionalLight.position.copy(camera.position);
-                directionalLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
+                cameraLight.position.copy(camera.position);
+                cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
             }
             animate();
         }, undefined, function(error) {
@@ -87,8 +109,8 @@ document.getElementById('startButton').addEventListener('click', function() {
             function animate() {
                 requestAnimationFrame(animate);
                 renderer.render(scene, camera);
-                directionalLight.position.copy(camera.position);
-                directionalLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
+                cameraLight.position.copy(camera.position);
+                cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
             }
             animate();
         }, undefined, function(error) {
