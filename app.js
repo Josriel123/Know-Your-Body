@@ -1,6 +1,8 @@
 // Declare variables outside the function to maintain state
-let scene, camera, renderer, controls, model;
+let scene, camera, renderer, model;
 
+import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js"
+ 
 document.getElementById('startButton').addEventListener('click', function() {
     var generalSection = document.getElementById('generalSection');
     generalSection.style.display = 'flex';
@@ -12,7 +14,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         var container = document.getElementById('threejs-container');
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer();
+        renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.gammaOutput = true;
         container.appendChild(renderer.domElement);
@@ -41,7 +43,6 @@ document.getElementById('startButton').addEventListener('click', function() {
             // Render loop
             function animate() {
                 requestAnimationFrame(animate);
-                model.rotation.y += 0.01; // Rotate model
                 renderer.render(scene, camera);
             }
             animate();
@@ -51,9 +52,6 @@ document.getElementById('startButton').addEventListener('click', function() {
 
         // Camera position
         camera.position.z = 5;
-
-        // Add OrbitControls
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
 
         // Handle window resize
         window.addEventListener('resize', function() {
@@ -88,10 +86,4 @@ document.getElementById('startButton').addEventListener('click', function() {
             console.error('Error loading model:', error);
         });
     }
-
-    // Update controls
-    if (controls) {
-        controls.update(); // Required for controls to work properly
-    }
 });
-
