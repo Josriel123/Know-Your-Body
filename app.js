@@ -1,3 +1,5 @@
+import { OrbitControls } from 'OrbitControls'
+
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model;
 
