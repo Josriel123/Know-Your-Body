@@ -1,4 +1,4 @@
-import { OrbitControls } from 'OrbitControls'
+import { OrbitControls } from 'OrbitControls.js'
 
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model;
