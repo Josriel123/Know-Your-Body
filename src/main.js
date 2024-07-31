@@ -99,7 +99,14 @@ document.getElementById('startButton').addEventListener('click', function() {
         loader.load('/Models/scene.gltf', function(gltf) {
             console.log('Model loaded successfully'); // Debug log
             model = gltf.scene;
+            model.traverse(function (child) {
+                if (child.isMesh) {
+                    child.castShadow = true; // Enable shadows for the model
+                    child.receiveShadow = true; // Enable shadows to be received by the model
+                }
+            }); 
             scene.add(model);
+
 
             // Adjust model scale and position if needed
             model.scale.set(2, 2, 2);
