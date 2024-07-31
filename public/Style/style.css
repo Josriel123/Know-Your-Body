@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif; /* This changes the overall font of the page */
+    background-color: #111111; /* This changes the background color of the page */
+    color: white; /* This will set the default text color to white */
+    margin: 0;
+    padding: 0;
+}
+
+/* Sets the position of the header */
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 2%;
+    
+}
+
+.company-name {
+    margin-left: 8%;
+    width: 20%;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'impact' , sans-serif;
+    letter-spacing: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.company-name a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    justify-content: center;
+    background-color: #111111;
+    padding: 10px;
+    width: 100%;
+    margin-left: 4%;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    margin: 0 5%;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.nav-menu a:hover {
+    color: aquamarine;
+}
+
+.slogan-container {
+    margin-left: 7%; 
+    text-align: left;
+    max-width: 40%;
+    font-family: 'Malgun Gothic Semil', sans-serif;
+    margin-top: 11%;
+}
+.slogan {
+    font-size: 115px;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.slogan-description {
+    font-size: 40px;
+    margin-top: 22%;
+    font-weight: lighter;
+ 
+}
+
+.Title {
+    margin-top: 20%;
+    margin-left: 30%;
+}
+
+.start {
+    margin-bottom: 8%;
+}
+
+.start-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1% 20px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 43%;
+}
+
+.start-button:hover {
+    background-color: aquamarine;
+}
+
+.general-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #111111;
+    height: 100vh;
+}
+
+
+#threejs-container {
+    width: 100%;
+    height: 100%;
+}
