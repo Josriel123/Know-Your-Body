@@ -1,4 +1,5 @@
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model;
