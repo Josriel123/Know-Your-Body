@@ -1,6 +1,6 @@
 // Declare variables outside the function to maintain state
-let scene, camera, renderer, model, controls; 
- 
+let scene, camera, renderer, controls, model;
+
 document.getElementById('startButton').addEventListener('click', function() {
     var generalSection = document.getElementById('generalSection');
     generalSection.style.display = 'flex';
@@ -12,13 +12,10 @@ document.getElementById('startButton').addEventListener('click', function() {
         var container = document.getElementById('threejs-container');
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.gammaOutput = true;
         container.appendChild(renderer.domElement);
-
-        controls = new THREE.OrbitControls(camera);
-        controls.addEventListener("change", renderer);
 
         // Add a light
         var light = new THREE.AmbientLight("#85b2cd");
@@ -54,6 +51,9 @@ document.getElementById('startButton').addEventListener('click', function() {
         // Camera position
         camera.position.z = 5;
 
+        // Add OrbitControls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+
         // Handle window resize
         window.addEventListener('resize', function() {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -85,5 +85,10 @@ document.getElementById('startButton').addEventListener('click', function() {
         }, undefined, function(error) {
             console.error('Error loading model:', error);
         });
+    }
+
+    // Update controls
+    if (controls) {
+        controls.update(); // Required for controls to work properly
     }
 });
