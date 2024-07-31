@@ -2,7 +2,13 @@ import * as THREE from 'three';
 import { GLTFLoader } from '/node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls.js';
 
+import { defineConfig } from 'vite';
 
+export default defineConfig({
+  build: {
+    outDir: 'dist',
+  },
+});
 
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model;
