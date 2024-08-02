@@ -1,16 +1,25 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 // Declare variables outside the function to maintain state
-let scene, camera, renderer, controls, model;
+let scene, camera, renderer, controls, model, cameraLight;
 
 // Function to load the 3D Model with all its lightiing and interactivity.
 function loadModel(cameraLight1) {
-    var cameraLight = cameraLight1
+
+    // Loding Spinner setup
+    var loadingSpineer = document.getElementById('loadingSpinner');
+    loadingSpineer.style.display = 'block';
+
+    // 3D Model Loaader setup
     var loader = new GLTFLoader();
+    var dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/draco/');
+    loader.setDRACOLoader(dracoLoader);
         loader.load('/Models/scene.gltf', function(gltf) {
-            console.log('Model loaded successfully'); // Debug log
+            loadingSpineer.style.display = 'none'; //Hide spineer once the model is loaded
             if (model) {
                 scene.remove(model); // Remove previous model if it exists
             }
@@ -36,6 +45,7 @@ function loadModel(cameraLight1) {
             }
             animate();
         }, undefined, function(error) {
+            loadingSpineer.style.display = 'none';
             console.error('Error loading model:', error);
         });
 
@@ -64,7 +74,9 @@ document.getElementById('startButton').addEventListener('click', function() {
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         renderer = new THREE.WebGLRenderer({alpha: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.gammaOutput = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -83,7 +95,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         topLight.shadow.camera.far = 50;
         scene.add(topLight);
 
-        var cameraLight = new THREE.DirectionalLight(0xadd8e6, 1);
+        cameraLight = new THREE.DirectionalLight(0xadd8e6, 1);
         cameraLight.position.set(0, 500, 0);
         cameraLight.castShadow = true;
         cameraLight.shadow.mapSize.width = 1024;
