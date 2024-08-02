@@ -87,7 +87,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         scene.add(ambientLight);
 
         var topLight = new THREE.DirectionalLight("#e6d9c6", 1.5);
-        topLight.position.set(0, 500, 0);
+        topLight.position.set(0, 100, 0);
         topLight.castShadow = true;
         topLight.shadow.mapSize.width = 1024;
         topLight.shadow.mapSize.height = 1024;
@@ -96,14 +96,14 @@ document.getElementById('startButton').addEventListener('click', function() {
         scene.add(topLight);
 
         cameraLight = new THREE.DirectionalLight(0xadd8e6, 1);
-        cameraLight.position.set(0, 500, 0);
+        cameraLight.position.set(0, 100000, 0);
         cameraLight.castShadow = true;
         cameraLight.shadow.mapSize.width = 1024;
         cameraLight.shadow.mapSize.height = 1024;
         cameraLight.shadow.camera.near = 0.5;
-        cameraLight.shadow.camera.far = 50;
+        cameraLight.shadow.camera.far = 10;
         scene.add(cameraLight)
-
+0
         // Loads the 3D Model
         loadModel(cameraLight);
     } else {
