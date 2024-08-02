@@ -101,7 +101,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         cameraLight.shadow.mapSize.width = 1024;
         cameraLight.shadow.mapSize.height = 1024;
         cameraLight.shadow.camera.near = 0.5;
-        cameraLight.shadow.camera.far = 10;
+        cameraLight.shadow.camera.far = 11;
         scene.add(cameraLight)
 0
         // Loads the 3D Model
