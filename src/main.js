@@ -6,83 +6,94 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model, cameraLight;
 
-// Function to load the 3D Model with all its lightiing and interactivity.
+// Function to load the 3D Model with all its lighting and interactivity.
 function loadModel(cameraLight1) {
 
-    // Loding Spinner setup
-    var loadingSpineer = document.getElementById('loadingSpinner');
-    loadingSpineer.style.display = 'block';
+    // Loading Spinner setup
+    var loadingSpinner = document.getElementById('loadingSpinner');
+    loadingSpinner.style.display = 'block';
 
-    // 3D Model Loaader setup
+    // 3D Model Loader setup
     var loader = new GLTFLoader();
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
-        loader.load('/Models/scene.gltf', function(gltf) {
-            loadingSpineer.style.display = 'none'; //Hide spineer once the model is loaded
-            if (model) {
-                scene.remove(model); // Remove previous model if it exists
+    loader.load('/Models/scene.gltf', function(gltf) {
+        console.log("Model Loaded");
+        loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
+        if (model) {
+            scene.remove(model); // Remove previous model if it exists
+        }
+        model = gltf.scene;
+        model.traverse(function (child) {
+            if (child.isMesh) {
+                child.castShadow = true; // Enable shadows for the model
+                child.receiveShadow = true; // Enable shadows to be received by the model
             }
-            model = gltf.scene;
-            model.traverse(function (child) {
-                if (child.isMesh) {
-                    child.castShadow = true; // Enable shadows for the model
-                    child.receiveShadow = true; // Enable shadows to be received by the model
-                }
-            });            
-            scene.add(model);
-
-            // Adjust model scale and position if needed
-            model.scale.set(3, 3, 3);
-            model.position.set(0, -2.7, 0);
-
-            // Render loop
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-                cameraLight.position.copy(camera.position);
-                cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
-            }
-            animate();
-        }, undefined, function(error) {
-            loadingSpineer.style.display = 'none';
-            console.error('Error loading model:', error);
         });
+        scene.add(model);
 
-        // Camera position
-        camera.position.z = 5;
+        // Adjust model scale and position if needed
+        model.scale.set(3.2, 3.2, 3.2);
+        model.position.set(0, -3, 0);
 
-        // Add OrbitControls
-        controls = new OrbitControls(camera, renderer.domElement);
+        // Render loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+            cameraLight.position.copy(camera.position);
+            cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
+        }
+        animate();
+    }, undefined, function(error) {
+        loadingSpinner.style.display = 'none';
+        console.error('Error loading model:', error);
+    });
 
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
+    // Camera position
+    camera.position.z = 5;
+
+    // Add OrbitControls
+    controls = new OrbitControls(camera, renderer.domElement);
+
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize);
 }
-document.getElementById('startButton').addEventListener('click', function() {
-    var generalSection = document.getElementById('generalSection');
-    generalSection.style.display = 'flex';
-    generalSection.scrollIntoView({ behavior: 'smooth' });
 
-    // Check if Three.js setup already exists
+function onWindowResize() {
+    var container = document.getElementById('threejs-container');
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    camera.aspect = container.clientWidth / container.clientHeight;
+    console.log(container.clientWidth, container.clientHeight);
+    camera.updateProjectionMatrix();
+}
+
+document.getElementById('startButton').addEventListener('click', function() {
+    var leftContainer = document.getElementById('leftContainer');
+    leftContainer.innerHTML = "<h1 class='instructions'>Select a part of the body</h1>";
+    leftContainer.style.paddingLeft = '7%';
+    leftContainer.style.width = '25vw';
+    leftContainer.style.backgroundColor = "white";
+    leftContainer.style.color = "black";
+
+    var rightContainer = document.getElementById('rightContainer');
+    rightContainer.innerHTML = "<div id='threejs-container'><div id='loadingSpinner'></div></div>";
+
+    // Initialize Three.js scene if it hasn't been initialized yet
     if (!scene) {
-        // Initialize Three.js scene
         var container = document.getElementById('threejs-container');
         scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({alpha: true});
+        camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.gammaOutput = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // Add a light
+        // Add lights
         var ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
         scene.add(ambientLight);
 
@@ -102,12 +113,14 @@ document.getElementById('startButton').addEventListener('click', function() {
         cameraLight.shadow.mapSize.height = 1024;
         cameraLight.shadow.camera.near = 0.5;
         cameraLight.shadow.camera.far = 11;
-        scene.add(cameraLight)
-0
-        // Loads the 3D Model
+        scene.add(cameraLight);
+
+        // Load the 3D Model
         loadModel(cameraLight);
     } else {
-        //Loads the 3D Model
+        // Update the renderer size
+        onWindowResize();
+        // Load the 3D Model
         loadModel(cameraLight);
     }
 
