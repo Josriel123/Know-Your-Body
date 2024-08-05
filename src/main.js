@@ -8,7 +8,6 @@ let scene, camera, renderer, controls, model, cameraLight;
 
 // Function to load the 3D Model with all its lighting and interactivity.
 function loadModel(cameraLight1) {
-
     // Loading Spinner setup
     var loadingSpinner = document.getElementById('loadingSpinner');
     loadingSpinner.style.display = 'block';

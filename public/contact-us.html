@@ -1,29 +1,50 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Know Your Body</title>
-        <link rel="stylesheet" href="/Style/style.css"/>
-    </head>
-    <body>
-        <header class="header">
-            
-            <div class="company-name">
-                <a href="index.html">
-                    <div class="know">KNOW</div>
-                    <div class="your-body">YOUR BODY</div>
-                </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Know Your Body</title>
+    <link rel="stylesheet" href="/Style/style.css">
+</head>
+<body>
+    <header>
+        <div class="company-name">
+            <a href="index.html">
+                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+            </a>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="contact-section">
+            <h1>Contact Us</h1>
+            <p>Nos encantaría saber de ti! Ya sea que tengas preguntas, comentarios o simplemente quieras saludar, por favor contáctanos utilizando el formulario a continuación:</p>
+            <form action="/submit-form" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br>
+                <button type="submit">Send</button>
+            </form>
+            <div class="contact-info">
+                <p><strong>Email:</strong> info@knowyourbody.com</p>
+                <p><strong>Phone:</strong> (123) 456-7890</p>
+                <p><strong>Address:</strong> 123 University Ave, City, Country</p>
             </div>
-            <nav class="nav-menu" id="navMenu">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="contact-us.html">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
-        <h1 class="Title">Contact Us</h1>
-        <script type="module" src="./src/main.js"></script>
-    </body>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+</body>
 </html>

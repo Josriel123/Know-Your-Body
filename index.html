@@ -1,45 +1,120 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Know Your Body</title>
-        <link rel="stylesheet" href="/Style/style.css"/>
-    </head>
-    <body>
-        <header class="header" id="header">
-            
-            <div class="company-name">
-                <a href="index.html">
-                    <div class="know">KNOW</div>
-                    <div class="your-body">YOUR BODY</div>
-                </a>
-            </div>
-            <nav class="nav-menu" id="navMenu">
-                <ul>
-                    <li><a href="/index.html">Home</a></li>
-                    <li><a href="/about-us.html">About Us</a></li>
-                    <li><a href="/services.html">Services</a></li>
-                    <li><a href="/contact-us.html">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div class="content">
-            <div class="left-container" id="leftContainer">
-                <p class="slogan">
-                    Point Your Pain
-                </p>
-            
-                <p class="slogan-description">
-                    To identify and heal with our revolutionary 3D human model
-                </p>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Body</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
+    <style>
+        /* Agregar estilos para el menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .dropdown-menu li {
+            padding: 8px 16px;
+        }
 
-            <div class="right-container" id="rightContainer">
-                <button class="start-button" id="startButton">
-                    Start
-                </button>
-            </div>
+        .dropdown-menu li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="company-name">
+            <a href="index.html">
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
+            </a>
         </div>
-        <script type="module" src="./src/main.js"></script>
-    </body>
+        <nav class="nav-menu" id="navMenu">
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="mission.html">Our Mission</a></li>
+                        <li><a href="values.html">Our Values</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="partnerships.html">Partnerships</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">What We Do</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
+                        <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
+                        <li><a href="community.html">Community Support</a></li>
+                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="educational-resources.html">Educational Resources</a></li>
+                        <li><a href="research.html">Research & Development</a></li>
+                    </ul>
+                </li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact-us.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="left-container" id="leftContainer">
+            <p class="slogan">
+                Point Your Pain
+            </p>
+        
+            <p class="slogan-description">
+                To identify and heal with our revolutionary 3D human model
+            </p>
+        </div>
+
+        <div class="right-container" id="rightContainer">
+            <button class="start-button" id="startButton">
+                Start
+            </button>
+        </div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+    <script>
+        // Menu Dropdown Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            dropdowns.forEach(function(dropdown) {
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+
+                toggle.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            });
+
+            // Close the dropdown when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.dropdown')) {
+                    dropdowns.forEach(function(dropdown) {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
 </html>
