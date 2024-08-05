@@ -1,29 +1,29 @@
 body {
-    font-family: Arial, sans-serif; /* This changes the overall font of the page */
-    background-color: #111111; /* This changes the background color of the page */
-    color: white; /* This will set the default text color to white */
+    font-family: Arial, sans-serif; /* Cambia la fuente general de la página */
+    background-color: #111111; /* Cambia el color de fondo de la página */
+    color: white; /* Establece el color de texto predeterminado a blanco */
     margin: 0;
     padding: 0;
 }
 
-/* Sets the position of the header */
+/* Estilo para el header */
 .header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; /* Distribuye espacio entre el nombre y el menú */
     align-items: center;
     margin-top: 2%;
-    
+    padding: 0 4%;
+    background-color: #111111;
 }
 
+/* Estilo para el nombre de la empresa */
 .company-name {
-    margin-left: 8%;
-    width: 20%;
     font-size: 28px;
     font-weight: bold;
-    font-family: 'impact' , sans-serif;
+    font-family: 'Impact', sans-serif;
     letter-spacing: 3px;
-    display: flex;
-    flex-direction: column;
+    color: white;
+    text-decoration: none;
 }
 
 .company-name a {
@@ -31,32 +31,80 @@ body {
     text-decoration: none;
 }
 
+/* Estilo para el menú de navegación */
 .nav-menu {
-    justify-content: center;
+    display: flex;
+    justify-content: center; /* Centra el menú de navegación */
     background-color: #111111;
-    padding: 10px;
-    width: 100%;
-    margin-left: 4%;
+    padding: 10px 0; /* Espaciado vertical para el menú */
 }
 
 .nav-menu ul {
-    display: flex;
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
+    display: flex; /* Muestra los ítems de menú en una fila horizontal */
 }
 
 .nav-menu li {
-    margin: 0 5%;
+    position: relative;
+    margin: 0 15px; /* Espaciado entre ítems de menú */
 }
 
 .nav-menu a {
     text-decoration: none;
     color: white;
     font-size: 20px;
+    padding: 10px 15px; /* Espaciado alrededor del texto */
+    display: block;
 }
 
 .nav-menu a:hover {
+    color: aquamarine;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo sutil al pasar el mouse */
+    border-radius: 5px;
+}
+
+/* Estilo para los submenús desplegables */
+.nav-menu .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    min-width: 200px;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu .dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-menu .dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.nav-menu .dropdown-menu a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    display: block;
+}
+
+.nav-menu .dropdown-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Mostrar el submenú cuando se pasa el mouse sobre el ítem de menú */
+.nav-menu .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-menu .dropdown:hover > a {
     color: aquamarine;
 }
 
@@ -75,6 +123,7 @@ body {
     padding-top: 4%;
     font-family: 'Malgun Gothic Semil', sans-serif;
 }
+
 .slogan {
     font-size: 115px;
     margin-bottom: 0;
@@ -85,7 +134,6 @@ body {
     font-size: 40px;
     margin-top: 22%;
     font-weight: lighter;
- 
 }
 
 .right-container {
@@ -119,8 +167,8 @@ body {
 }
 
 #loadingSpinner {
-    border: 30px solid #f3f3f3; /* Light grey */
-    border-top: 30px solid #3498db; /* Blue */
+    border: 30px solid #f3f3f3; /* Gris claro */
+    border-top: 30px solid #3498db; /* Azul */
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -129,7 +177,7 @@ body {
     left: 46.75%;
     top: 40%;
     transform: translate(-50%, -50%);
-    z-index: 1000; /* Ensure it is on top */
+    z-index: 1000; /* Asegúrate de que esté encima */
     display: none;
 }
 

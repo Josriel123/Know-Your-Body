@@ -8,7 +8,6 @@ let scene, camera, renderer, controls, model, cameraLight;
 
 // Function to load the 3D Model with all its lighting and interactivity.
 function loadModel(cameraLight1) {
-
     // Loading Spinner setup
     var loadingSpinner = document.getElementById('loadingSpinner');
     loadingSpinner.style.display = 'block';
@@ -34,7 +33,7 @@ function loadModel(cameraLight1) {
         scene.add(model);
 
         // Adjust model scale and position if needed
-        model.scale.set(3.2, 3.2, 3.2);
+        model.scale.set(27, 27, 27);
         model.position.set(0, -3, 0);
 
         // Render loop
@@ -73,8 +72,8 @@ document.getElementById('startButton').addEventListener('click', function() {
     leftContainer.innerHTML = "<h1 class='instructions'>Select a part of the body</h1>";
     leftContainer.style.paddingLeft = '7%';
     leftContainer.style.width = '25vw';
-    leftContainer.style.backgroundColor = "white";
-    leftContainer.style.color = "black";
+    leftContainer.style.backgroundColor = "black";
+    leftContainer.style.color = "white";
 
     var rightContainer = document.getElementById('rightContainer');
     rightContainer.innerHTML = "<div id='threejs-container'><div id='loadingSpinner'></div></div>";
