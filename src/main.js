@@ -17,7 +17,7 @@ function loadModel(cameraLight1) {
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
-    loader.load('/Models/scene.gltf', function(gltf) {
+    loader.load('/Models/model.gltf', function(gltf) {
         console.log("Model Loaded");
         loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
         if (model) {
@@ -116,10 +116,10 @@ document.getElementById('startButton').addEventListener('click', function() {
         container.appendChild(renderer.domElement);
 
         // Add lights
-        var ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        var ambientLight = new THREE.AmbientLight(0x404040);
         scene.add(ambientLight);
 
-        var topLight = new THREE.DirectionalLight("#e6d9c6", 1.5);
+        var topLight = new THREE.DirectionalLight("#e6d9c6", 1.3);
         topLight.position.set(0, 100, 0);
         topLight.castShadow = true;
         topLight.shadow.mapSize.width = 1024;
@@ -128,8 +128,8 @@ document.getElementById('startButton').addEventListener('click', function() {
         topLight.shadow.camera.far = 50;
         scene.add(topLight);
 
-        cameraLight = new THREE.DirectionalLight(0xadd8e6, 1);
-        cameraLight.position.set(0, 100000, 0);
+        cameraLight = new THREE.DirectionalLight(0xadd8e6, 1.2);
+        cameraLight.position.set(0, 100, 0);
         cameraLight.castShadow = true;
         cameraLight.shadow.mapSize.width = 1024;
         cameraLight.shadow.mapSize.height = 1024;
