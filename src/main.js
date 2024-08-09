@@ -67,6 +67,29 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 }
 
+// Menu Dropdown Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(function(dropdown) {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // Close the dropdown when clicking outside of it
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.dropdown')) {
+            dropdowns.forEach(function(dropdown) {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+
 document.getElementById('startButton').addEventListener('click', function() {
     var leftContainer = document.getElementById('leftContainer');
     leftContainer.innerHTML = "<h1 class='instructions'>Select a part of the body</h1>";
