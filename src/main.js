@@ -2,9 +2,15 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { Raycaster, Vector2 } from 'three';
 
 // Declare variables outside the function to maintain state
 let scene, camera, renderer, controls, model, cameraLight;
+let raycaster = new Raycaster();
+let mouse = new Vector2();
+
+
+
 
 // Function to load the 3D Model with all its lighting and interactivity.
 function loadModel(cameraLight1) {
@@ -33,12 +39,13 @@ function loadModel(cameraLight1) {
         scene.add(model);
 
         // Adjust model scale and position if needed
-        model.scale.set(27, 27, 27);
-        model.position.set(0, -3, 0);
+        model.scale.set(22, 22, 22);
+        model.position.set(0, -2.5, 0);
 
         // Render loop
         function animate() {
             requestAnimationFrame(animate);
+            controls.update();
             renderer.render(scene, camera);
             cameraLight.position.copy(camera.position);
             cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
@@ -55,6 +62,16 @@ function loadModel(cameraLight1) {
     // Add OrbitControls
     controls = new OrbitControls(camera, renderer.domElement);
 
+    // Disable panning and zooming
+    controls.enablePan = false;
+    controls.enableZoom = false;
+
+    // Set rotation limits (optional)
+    controls.minPolarAngle = Math.PI / 20; // Limit vertical rotation
+    controls.maxPolarAngle = Math.PI; // Limit vertical rotation
+    controls.enableDamping = true; // Enable smooth rotation
+    controls.dampingFactor = 0.05; // Damping factor for smooth rotation
+
     // Handle window resize
     window.addEventListener('resize', onWindowResize);
 }
@@ -65,6 +82,38 @@ function onWindowResize() {
     camera.aspect = container.clientWidth / container.clientHeight;
     console.log(container.clientWidth, container.clientHeight);
     camera.updateProjectionMatrix();
+}
+
+function onMouseClick(event) {
+    // Convert the mouse position to normalized device coordinates
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Update the raycaster with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
+
+    // Calculate the intersects with the model's children (meshes)
+    const intersects = raycaster.intersectObjects(model.children, true);
+
+    if (intersects.length > 0) {
+        const selectedPart = intersects[0].object; // The first intersected object
+        console.log('Selected part:', selectedPart.name);
+
+        // Perform your desired action with the selected part
+        // Example: change its color
+        selectedPart.material.color.set('#1a8bb9');
+        console.log(selectedPart)
+
+        // Or trigger a function depending on the selected part's name
+        if (selectedPart.name === 'head') {
+            console.log('Head selected');
+            // Implement specific action for head selection
+        } else if (selectedPart.name === 'arm') {
+            console.log('Arm selected');
+            // Implement specific action for arm selection
+        }
+        // Add more conditions based on other parts
+    }
 }
 
 // Menu Dropdown Functionality
@@ -139,6 +188,10 @@ document.getElementById('startButton').addEventListener('click', function() {
 
         // Load the 3D Model
         loadModel(cameraLight);
+        onWindowResize();
+
+        // Add event listener for mouse clicks
+        renderer.domElement.addEventListener('click', onMouseClick, false);
     } else {
         // Update the renderer size
         onWindowResize();
