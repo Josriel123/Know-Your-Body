@@ -23,7 +23,7 @@ function loadModel(cameraLight1) {
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
-    loader.load('/Models/model.gltf', function(gltf) {
+    loader.load('/Models/body.gltf', function(gltf) {
         console.log("Model Loaded");
         loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
         if (model) {
