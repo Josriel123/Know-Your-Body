@@ -8,14 +8,19 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				0
+				0,
+				1
 			]
 		}
 	],
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Cuerpo"
+			"name":"Cabeza"
+		},
+		{
+			"mesh":1,
+			"name":"Cuerpito"
 		}
 	],
 	"materials":[
@@ -47,16 +52,57 @@
 					"material":0
 				}
 			]
+		},
+		{
+			"name":"body012_2.001",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":3,
+						"NORMAL":4
+					},
+					"indices":5,
+					"material":0
+				}
+			]
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":61654,
+			"count":4737,
+			"max":[
+				0.011358605697751045,
+				0.23720897734165192,
+				0.016573427245020866
+			],
+			"min":[
+				-0.011665897443890572,
+				0.20416738092899323,
+				-0.011017774231731892
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":1,
+			"componentType":5126,
+			"count":4737,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":2,
+			"componentType":5123,
+			"count":27810,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":3,
+			"componentType":5126,
+			"count":57288,
 			"max":[
 				0.06558844447135925,
-				0.23720897734165192,
+				0.205259770154953,
 				0.021686360239982605
 			],
 			"min":[
@@ -67,41 +113,59 @@
 			"type":"VEC3"
 		},
 		{
-			"bufferView":1,
+			"bufferView":4,
 			"componentType":5126,
-			"count":61654,
+			"count":57288,
 			"type":"VEC3"
 		},
 		{
-			"bufferView":2,
+			"bufferView":5,
 			"componentType":5123,
-			"count":370002,
+			"count":343200,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":739848,
+			"byteLength":56844,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":739848,
-			"byteOffset":739848,
+			"byteLength":56844,
+			"byteOffset":56844,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":740004,
-			"byteOffset":1479696,
+			"byteLength":55620,
+			"byteOffset":113688,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":687456,
+			"byteOffset":169308,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":687456,
+			"byteOffset":856764,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":686400,
+			"byteOffset":1544220,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":2219700,
+			"byteLength":2230620,
 			"uri":"model.bin"
 		}
 	]

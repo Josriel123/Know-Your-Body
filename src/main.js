@@ -47,17 +47,21 @@ function loadModel(cameraLight1) {
             requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
-            cameraLight.position.copy(camera.position);
-            cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()));
+        
+            // Correct position offset for cameraLight to follow the camera
+            const lightOffset = new THREE.Vector3(0, 1, 0).normalize().multiplyScalar(4.5); // Adjust these values as needed
+            cameraLight.position.copy(camera.position).add(lightOffset);
+            
+            // Ensure light targets where the camera is looking
+            cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(11));
+            cameraLight.target.updateMatrixWorld(); // Important to update the target matrix
         }
+        
         animate();
     }, undefined, function(error) {
         loadingSpinner.style.display = 'none';
         console.error('Error loading model:', error);
     });
-
-    // Camera position
-    camera.position.z = 5;
 
     // Add OrbitControls
     controls = new OrbitControls(camera, renderer.domElement);
@@ -85,9 +89,11 @@ function onWindowResize() {
 }
 
 function onMouseClick(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    
     // Convert the mouse position to normalized device coordinates
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     // Update the raycaster with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
@@ -97,24 +103,29 @@ function onMouseClick(event) {
 
     if (intersects.length > 0) {
         const selectedPart = intersects[0].object; // The first intersected object
-        console.log('Selected part:', selectedPart.name);
 
-        // Perform your desired action with the selected part
-        // Example: change its color
-        selectedPart.material.color.set('#1a8bb9');
-        console.log(selectedPart)
+        if (selectedPart.isMesh) {
+            console.log('Selected part:', selectedPart.name);
 
-        // Or trigger a function depending on the selected part's name
-        if (selectedPart.name === 'head') {
-            console.log('Head selected');
-            // Implement specific action for head selection
-        } else if (selectedPart.name === 'arm') {
-            console.log('Arm selected');
-            // Implement specific action for arm selection
+            // Clone the material if it's shared with other parts
+            selectedPart.material = selectedPart.material.clone();
+
+            // Change the color of the selected part
+            selectedPart.material.color.set('#1a8bb9');
+
+            // Add additional logic based on the selected part's name
+            if (selectedPart.name === 'Cabeza') {
+                console.log('Head selected');
+                // Implement specific action for head selection
+            } else if (selectedPart.name === 'Cuerpito') {
+                console.log('Body selected');
+                // Implement specific action for body selection
+            }
         }
-        // Add more conditions based on other parts
     }
 }
+
+
 
 // Menu Dropdown Functionality
 document.addEventListener('DOMContentLoaded', function() {
@@ -169,22 +180,38 @@ document.getElementById('startButton').addEventListener('click', function() {
         scene.add(ambientLight);
 
         var topLight = new THREE.DirectionalLight("#e6d9c6", 1.3);
-        topLight.position.set(0, 100, 0);
+        topLight.position.set(0, 10, 0);
         topLight.castShadow = true;
-        topLight.shadow.mapSize.width = 1024;
-        topLight.shadow.mapSize.height = 1024;
-        topLight.shadow.camera.near = 0.5;
-        topLight.shadow.camera.far = 50;
+        topLight.shadow.mapSize.width = 4096;
+        topLight.shadow.mapSize.height = 4096;
+        topLight.shadow.camera.left = -10;
+        topLight.shadow.camera.right = 10;
+        topLight.shadow.camera.top = 10;
+        topLight.shadow.camera.bottom = -10;
+        topLight.shadow.camera.near = 1;
+        topLight.shadow.camera.far = 20;
+        topLight.shadow.bias = -0.001; // Adjust this value to reduce shadow artifacts
         scene.add(topLight);
 
         cameraLight = new THREE.DirectionalLight(0xadd8e6, 1.2);
-        cameraLight.position.set(0, 100, 0);
+        camera.position.set(0, 2.5, 5); // Positioned above and looking down at the model
+        camera.lookAt(0, 0, 0); // Ensure the camera is looking at the center of the scene or model
         cameraLight.castShadow = true;
-        cameraLight.shadow.mapSize.width = 1024;
-        cameraLight.shadow.mapSize.height = 1024;
-        cameraLight.shadow.camera.near = 0.5;
-        cameraLight.shadow.camera.far = 11;
+        cameraLight.shadow.mapSize.width = 4096;
+        cameraLight.shadow.mapSize.height = 4096;
+        cameraLight.shadow.camera.left = -10;
+        cameraLight.shadow.camera.right = 10;
+        cameraLight.shadow.camera.top = 10;
+        cameraLight.shadow.camera.bottom = -10;
+        cameraLight.shadow.camera.near = 1;
+        cameraLight.shadow.camera.far = 20;
+        cameraLight.shadow.bias = -0.001; // Adjust this as needed
         scene.add(cameraLight);
+
+        //const shadowHelper = new THREE.CameraHelper(topLight.shadow.camera);
+        //scene.add(shadowHelper);
+
+
 
         // Load the 3D Model
         loadModel(cameraLight);
@@ -197,6 +224,7 @@ document.getElementById('startButton').addEventListener('click', function() {
         onWindowResize();
         // Load the 3D Model
         loadModel(cameraLight);
+        renderer.domElement.addEventListener('click', onMouseClick, false);
     }
 
     // Update controls
