@@ -24,7 +24,6 @@ function loadModel(cameraLight1) {
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
     loader.load('/Models/body.gltf', function(gltf) {
-        console.log("Model Loaded");
         loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
         if (model) {
             scene.remove(model); // Remove previous model if it exists
@@ -90,6 +89,7 @@ function onWindowResize() {
 
 function onMouseClick(event) {
     const rect = renderer.domElement.getBoundingClientRect();
+    let matColor;
     
     // Convert the mouse position to normalized device coordinates
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -103,23 +103,19 @@ function onMouseClick(event) {
 
     if (intersects.length > 0) {
         const selectedPart = intersects[0].object; // The first intersected object
-
+        
         if (selectedPart.isMesh) {
-            console.log('Selected part:', selectedPart.name);
-
-            // Clone the material if it's shared with other parts
-            selectedPart.material = selectedPart.material.clone();
 
             // Change the color of the selected part
-            selectedPart.material.color.set('#1a8bb9');
-
-            // Add additional logic based on the selected part's name
-            if (selectedPart.name === 'Cabeza') {
-                console.log('Head selected');
-                // Implement specific action for head selection
-            } else if (selectedPart.name === 'Cuerpito') {
-                console.log('Body selected');
-                // Implement specific action for body selection
+            if (selectedPart.material.color.getHexString() === '1a8bb9'){
+                selectedPart.material.color.set('#a6a6a6');
+                console.log('Unselected part:', selectedPart.name);
+            }  
+            else {
+                // Clone the material if it's shared with other parts
+                selectedPart.material = selectedPart.material.clone();
+                selectedPart.material.color.set('#1a8bb9');
+                console.log('Selected part:', selectedPart.name);
             }
         }
     }
