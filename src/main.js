@@ -38,7 +38,7 @@ function loadModel(cameraLight1) {
         scene.add(model);
 
         // Adjust model scale and position if needed
-        model.scale.set(22, 22, 22);
+        model.scale.set(24, 24, 24);
         model.position.set(0, -2.5, 0);
 
         // Render loop
