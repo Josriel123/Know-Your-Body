@@ -8,7 +8,7 @@ import { Raycaster, Vector2 } from 'three';
 let scene, camera, renderer, controls, model, cameraLight;
 let raycaster = new Raycaster();
 let mouse = new Vector2();
-
+const partsSelected = [];
 
 
 
@@ -23,7 +23,7 @@ function loadModel(cameraLight1) {
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
-    loader.load('/Models/body.gltf', function(gltf) {
+    loader.load('/Models/model.gltf', function(gltf) {
         loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
         if (model) {
             scene.remove(model); // Remove previous model if it exists
@@ -100,22 +100,30 @@ function onMouseClick(event) {
 
     // Calculate the intersects with the model's children (meshes)
     const intersects = raycaster.intersectObjects(model.children, true);
+    console.log(intersects[1].object);
+    //for (const i of intersects.object) {
+        //console.log(i);
+    //}
 
     if (intersects.length > 0) {
         const selectedPart = intersects[0].object; // The first intersected object
+
         
         if (selectedPart.isMesh) {
 
             // Change the color of the selected part
             if (selectedPart.material.color.getHexString() === '1a8bb9'){
                 selectedPart.material.color.set('#a6a6a6');
+                partsSelected.filter(i => i !== selectedPart)
                 console.log('Unselected part:', selectedPart.name);
             }  
             else {
                 // Clone the material if it's shared with other parts
                 selectedPart.material = selectedPart.material.clone();
                 selectedPart.material.color.set('#1a8bb9');
+                partsSelected.push(selectedPart);
                 console.log('Selected part:', selectedPart.name);
+
             }
         }
     }
@@ -148,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById('startButton').addEventListener('click', function() {
     var leftContainer = document.getElementById('leftContainer');
-    leftContainer.innerHTML = "<h1 class='instructions'>Select a part of the body</h1>";
+    leftContainer.innerHTML = "<h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>";
     leftContainer.style.paddingLeft = '7%';
     leftContainer.style.width = '25vw';
     leftContainer.style.backgroundColor = "black";
@@ -204,14 +212,11 @@ document.getElementById('startButton').addEventListener('click', function() {
         cameraLight.shadow.bias = -0.001; // Adjust this as needed
         scene.add(cameraLight);
 
-        //const shadowHelper = new THREE.CameraHelper(topLight.shadow.camera);
-        //scene.add(shadowHelper);
-
-
 
         // Load the 3D Model
         loadModel(cameraLight);
         onWindowResize();
+
 
         // Add event listener for mouse clicks
         renderer.domElement.addEventListener('click', onMouseClick, false);
