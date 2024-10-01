@@ -89,7 +89,6 @@ function onWindowResize() {
 
 function onMouseClick(event) {
     const rect = renderer.domElement.getBoundingClientRect();
-    let matColor;
     
     // Convert the mouse position to normalized device coordinates
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -100,10 +99,7 @@ function onMouseClick(event) {
 
     // Calculate the intersects with the model's children (meshes)
     const intersects = raycaster.intersectObjects(model.children, true);
-    console.log(intersects[1].object);
-    //for (const i of intersects.object) {
-        //console.log(i);
-    //}
+
 
     if (intersects.length > 0) {
         const selectedPart = intersects[0].object; // The first intersected object
@@ -233,3 +229,47 @@ document.getElementById('startButton').addEventListener('click', function() {
         controls.update(); // Required for controls to work properly
     }
 });
+
+
+
+// Google Translate
+
+// Initialize Google Translate
+// Initialize Google Translate
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+
+    // Call the function to style the dropdown after Google Translate loads
+    setTimeout(function() {
+        styleGoogleTranslateDropdown();
+    }, 1000); // Allow time for Google Translate to load
+}
+
+// Function to style the Google Translate dropdown
+function styleGoogleTranslateDropdown() {
+    var translateDropdown = document.querySelector('.goog-te-combo');
+
+    if (translateDropdown) {
+        // Set the max width of the dropdown
+        translateDropdown.style.maxWidth = '200px';
+        translateDropdown.style.overflow = 'hidden';
+        translateDropdown.style.fontSize = '14px'; // Adjust font size as needed
+
+        // Add a scrollbar to the options list (in case there are too many languages)
+        translateDropdown.style.height = 'auto';
+        translateDropdown.style.maxHeight = '150px'; // Adjust height for scrolling
+        translateDropdown.style.overflowY = 'scroll'; // Enable vertical scroll
+    }
+}
+
+// Load Google Translate API
+(function() {
+    var googleTranslateScript = document.createElement('script');
+    googleTranslateScript.type = 'text/javascript';
+    googleTranslateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.getElementsByTagName('head')[0].appendChild(googleTranslateScript);
+})();
+

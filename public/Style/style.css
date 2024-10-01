@@ -219,3 +219,13 @@ body {
 .dropdown.active .dropdown-menu {
     display: block;
 }
+
+/* Remove unnecessary styles for the Google Translate element */
+#google_translate_element {
+    max-width: 200px; /* Adjust this if needed */
+}
+
+.goog-te-combo {
+    font-size: 14px; /* Keep this small to fit more items */
+    overflow-y: scroll; /* Ensure scroll bar works */
+}

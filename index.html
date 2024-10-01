@@ -16,6 +16,7 @@
         </div>
         <nav class="nav-menu" id="navMenu">
             <ul>
+                <!-- Existing nav menu items -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
@@ -41,25 +42,35 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
+
     <div class="content">
         <div class="left-container" id="leftContainer">
-            <p class="slogan">
-                Point Your Pain
-            </p>
-        
-            <p class="slogan-description">
-                To identify and heal with our revolutionary 3D human model
-            </p>
+            <p class="slogan">Point Your Pain</p>
+            <p class="slogan-description">To identify and heal with our revolutionary 3D human model</p>
         </div>
-
         <div class="right-container" id="rightContainer">
-            <button class="start-button" id="startButton">
-                Start
-            </button>
+            <button class="start-button" id="startButton">Start</button>
         </div>
     </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- External JS file -->
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>
