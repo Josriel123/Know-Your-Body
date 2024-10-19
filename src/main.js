@@ -18,12 +18,6 @@ function LeftContainer() {
     leftContainer.style.width = '25vw';
     leftContainer.style.backgroundColor = "#111111";
     leftContainer.style.color = "white";
-    let doneButton = document.getElementById('doneButton');
-    doneButton.style.marginTop = "50%";
-    doneButton.style.width = "90%";
-    doneButton.style.height = "20%";
-    doneButton.style.fontSize = "50px";
-    doneButton.style.borderRadius = "7%";
 
 
 }
@@ -34,7 +28,7 @@ function LeftContainerHTML(string) {
     leftContainer.innerHTML = string;
 
     // Now that the button is in the DOM, attach the event listener
-    const doneButton = document.getElementById('doneButton');
+    let doneButton = document.getElementById('doneButton');
     if (doneButton) {
         doneButton.addEventListener('click', function() {
             LeftContainerHTML
@@ -46,6 +40,12 @@ function LeftContainerHTML(string) {
             );
         });
     }
+
+    doneButton.style.marginTop = "50%";
+    doneButton.style.width = "90%";
+    doneButton.style.height = "20%";
+    doneButton.style.fontSize = "50px";
+    doneButton.style.borderRadius = "7%";
 }
 
 
@@ -167,7 +167,7 @@ function onMouseClick(event) {
             (
                 `
                     <h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>
-                    <p> Body parts selected: ${partsSelected}</p>
+                    <p> Body parts selected: ${partsSelected.join(", ")}</p>
                     <button class="done-button" id="doneButton">Done</button>
                 `
             );
