@@ -1,9 +1,12 @@
-body {
+html, body {
     font-family: Arial, sans-serif; /* Cambia la fuente general de la página */
     background-color: #111111; /* Cambia el color de fondo de la página */
     color: white; /* Establece el color de texto predeterminado a blanco */
     margin: 0;
     padding: 0;
+    height: 100;
+    overflow: hidden;
+
 }
 
 /* Estilo para el header */
@@ -118,7 +121,7 @@ body {
     height: 70vh;
     margin-right: 2%;
     margin-left: 2%;
-    margin-top: 5%;
+    margin-top: 0;
     padding-left: 5%;
     padding-top: 4%;
     font-family: 'Malgun Gothic Semil', sans-serif;
@@ -126,14 +129,17 @@ body {
 
 .slogan {
     font-size: 115px;
+    margin-top: 0;
     margin-bottom: 0;
     font-weight: bold;
+    color: white;
 }
 
 .slogan-description {
     font-size: 40px;
     margin-top: 22%;
     font-weight: lighter;
+    color: white;
 }
 
 .right-container {
@@ -222,10 +228,16 @@ body {
 
 /* Remove unnecessary styles for the Google Translate element */
 #google_translate_element {
-    max-width: 200px; /* Adjust this if needed */
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 
 .goog-te-combo {
     font-size: 14px; /* Keep this small to fit more items */
     overflow-y: scroll; /* Ensure scroll bar works */
+}
+
+.done-button:hover {
+    background-color: aquamarine;
 }

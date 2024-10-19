@@ -8,7 +8,47 @@ import { Raycaster, Vector2 } from 'three';
 let scene, camera, renderer, controls, model, cameraLight;
 let raycaster = new Raycaster();
 let mouse = new Vector2();
-const partsSelected = [];
+let partsSelected = [];
+
+function LeftContainer() {
+    let leftContainer = document.getElementById('leftContainer');
+    leftContainer.style.paddingLeft = '5%';
+    leftContainer.style.paddingRight = '0';
+    leftContainer.style.marginRight = "0";
+    leftContainer.style.width = '25vw';
+    leftContainer.style.backgroundColor = "#111111";
+    leftContainer.style.color = "white";
+    let doneButton = document.getElementById('doneButton');
+    doneButton.style.marginTop = "50%";
+    doneButton.style.width = "90%";
+    doneButton.style.height = "20%";
+    doneButton.style.fontSize = "50px";
+    doneButton.style.borderRadius = "7%";
+
+
+}
+
+// Function to update the left container's content dynamically
+function LeftContainerHTML(string) {
+    let leftContainer = document.getElementById('leftContainer');
+    leftContainer.innerHTML = string;
+
+    // Now that the button is in the DOM, attach the event listener
+    const doneButton = document.getElementById('doneButton');
+    if (doneButton) {
+        doneButton.addEventListener('click', function() {
+            LeftContainerHTML
+            (
+                `
+                    <h1>Questionnaire</h1>
+                    <p>1. Do you feel pain in the selected area?</p>
+                `
+            );
+        });
+    }
+}
+
+
 
 
 
@@ -23,7 +63,7 @@ function loadModel(cameraLight1) {
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
-    loader.load('/Models/model.gltf', function(gltf) {
+    loader.load('/Models/EnglishModel.gltf', function(gltf) {
         loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
         if (model) {
             scene.remove(model); // Remove previous model if it exists
@@ -38,8 +78,8 @@ function loadModel(cameraLight1) {
         scene.add(model);
 
         // Adjust model scale and position if needed
-        model.scale.set(24, 24, 24);
-        model.position.set(0, -2.5, 0);
+        model.scale.set(26, 26, 26);
+        model.position.set(0, -2.77, 0);
 
         // Render loop
         function animate() {
@@ -110,21 +150,30 @@ function onMouseClick(event) {
             // Change the color of the selected part
             if (selectedPart.material.color.getHexString() === '1a8bb9'){
                 selectedPart.material.color.set('#a6a6a6');
-                partsSelected.filter(i => i !== selectedPart)
-                console.log('Unselected part:', selectedPart.name);
+                let name = selectedPart.name.replace(/_/g, " ")
+                partsSelected = partsSelected.filter(i => i !== name)
+                console.log('Unselected part:', name);
             }  
             else {
                 // Clone the material if it's shared with other parts
                 selectedPart.material = selectedPart.material.clone();
                 selectedPart.material.color.set('#1a8bb9');
-                partsSelected.push(selectedPart);
-                console.log('Selected part:', selectedPart.name);
+                let name = selectedPart.name.replace(/_/g, " ")
+                partsSelected.push(name);
+                console.log('Selected part:', name);
 
             }
+            LeftContainerHTML
+            (
+                `
+                    <h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>
+                    <p> Body parts selected: ${partsSelected}</p>
+                    <button class="done-button" id="doneButton">Done</button>
+                `
+            );
         }
     }
 }
-
 
 
 // Menu Dropdown Functionality
@@ -151,22 +200,27 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('startButton').addEventListener('click', function() {
-    var leftContainer = document.getElementById('leftContainer');
-    leftContainer.innerHTML = "<h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>";
-    leftContainer.style.paddingLeft = '7%';
-    leftContainer.style.width = '25vw';
-    leftContainer.style.backgroundColor = "black";
-    leftContainer.style.color = "white";
+    
+    LeftContainerHTML
+    (
+        `
+            <h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>
+            <p> Body parts selected: ${partsSelected}</p>
+            <button class="done-button" id="doneButton">Done</button>
+        `
+    );
+    LeftContainer();
 
     var rightContainer = document.getElementById('rightContainer');
     rightContainer.innerHTML = "<div id='threejs-container'><div id='loadingSpinner'></div></div>";
+    rightContainer.style.marginLeft = "0";
 
     // Initialize Three.js scene if it hasn't been initialized yet
     if (!scene) {
         var container = document.getElementById('threejs-container');
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer = new THREE.WebGLRenderer({ alpha: true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.outputEncoding = THREE.sRGBEncoding;
@@ -272,4 +326,5 @@ function styleGoogleTranslateDropdown() {
     googleTranslateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     document.getElementsByTagName('head')[0].appendChild(googleTranslateScript);
 })();
+
 
