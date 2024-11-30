@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educational Resources - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Educational Resources</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Who We Are</a>
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
-                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">What We Do</a>
+                    <a href="#" class="dropdown-toggle">What We Do</a>
                     <ul class="dropdown-menu">
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -40,19 +40,33 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
         <section class="educational-resources-section">
             <h1>Educational Resources</h1>
-            <p>Nuestra sección de <strong>Educational Resources</strong> está llena de material educativo para ayudarte a comprender mejor temas de salud y bienestar. Desde infografías hasta videos educativos, ofrecemos recursos para que te mantengas informado y empoderado sobre tu salud.</p>
-            <p>Accede a recursos creados por expertos para mejorar tu conocimiento y aprender más sobre cómo cuidar tu cuerpo de manera efectiva.</p>
+            <p>Our <strong>Educational Resources</strong> section is filled with educational material to help you better understand health and wellness topics. From infographics to educational videos, we offer resources to keep you informed and empowered about your health.</p>
+            <p>Access resources created by experts to enhance your knowledge and learn more about effectively taking care of your body.</p>
             <a href="educational-resources.html" class="cta-button">Explore Educational Resources</a>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+
+     <!-- Google Translate Script -->
+     <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

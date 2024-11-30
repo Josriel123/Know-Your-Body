@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Team - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Team</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Who We Are</a>
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
-                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">What We Do</a>
+                    <a href="#" class="dropdown-toggle">What We Do</a>
                     <ul class="dropdown-menu">
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -40,24 +40,37 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
         <section class="team-section">
             <h1>Our Team</h1>
-            <p>Conoce a los líderes detrás de Know Your Body. Nuestro equipo de expertos en salud, tecnología y gestión dirige el proyecto con pasión y compromiso.</p>
+            <p>Meet the leaders behind Know Your Body. Our team of experts in health, technology, and management leads the project with passion and commitment.</p>
             <h2>Meet Our Leaders</h2>
-            <p><strong>Hugo Lopez</strong> - Founder, CEO & project manager: </p>
-            <p><strong>Joel Bueno</strong> - Co-founder & Web developer: </p>
-            <p><strong>Alvaro Martinez</strong> - Co-founder & Medical diagnose administrator: </p>
-            <p><strong>???</strong> - Web designer: </p>
-            <p><strong>Vipolmao</strong> - 3D artist & modellor: </p>
+            <p><strong>Joel Bueno</strong> - Majoring in Software Engineer at UMiami. Role: Full-Stack Developer.</p>
+            <p><strong>Luke D'Alise</strong> - Majoring in Biomedical Engineering at UMiami. Role: Medical Researcher.</p>
+            <p><strong>Nicholas Picouzo</strong> - Majoring in Mechanical Engineering at UMiami. Role: Back-End Developer.</p>
+            <p><strong>Addy Kernner</strong> - Majoring in Aerospace Engineering at UMiami. Role: Front-End Developer.</p>
+            <p><strong>Charles Gavin</strong> - Majoring in Civil Engineering at UMiami. Role: 3D Model Designer.</p>
             <!-- Agrega más miembros del equipo según sea necesario -->
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

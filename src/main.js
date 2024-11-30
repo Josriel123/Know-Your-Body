@@ -8,202 +8,269 @@ import { Raycaster, Vector2 } from 'three';
 let scene, camera, renderer, controls, model, cameraLight;
 let raycaster = new Raycaster();
 let mouse = new Vector2();
-let partsSelected = [];
-let symptoms = {
-    pain: false,
-    swelling: false,
-    sensation: false,
-    strength: false,
-    pins_and_needles: false,
-    numbness: false,
-    blows: false,
-    noSensation: false,
-    morningStiffness: false,
-    nonTemporaryWeakness: false,
-    noGripStrength: false,
-    noHandMovement: false
+
+// State to track selected parts and symptoms
+const state = {
+    partsSelected: [],
+    symptoms: {},
+    currentNode: "start"
 };
-let num = 1;
 
-function waitForNextButton() {
-    return new Promise((resolve) => {
-        const nextButton = document.getElementById("nextButton");
-        if (nextButton) {
-            nextButton.onclick = () => {
-                symptoms["next"] = true;
-                resolve(); // Resolves the Promise when "Next" is clicked
-            };
-        }
+// Example pathologies with symptoms and affected parts
+const pathologies = [
+    {
+        name: "Carpal Tunnel Syndrome",
+        symptoms: ["sensation", "strength", "pain", "swelling"],
+        parts: ["Wrist and Hand", "Thumb", "Index Finger", "Middle Finger"]
+    },
+    {
+        name: "De Quervain's Tenosynovitis",
+        symptoms: ["pain", "swelling"],
+        parts: ["thumb", "wrist"]
+    },
+    {
+        name: "Trigger Finger",
+        symptoms: ["strength", "sensation"],
+        parts: ["thumb", "index finger", "middle finger", "ring finger", "pinky"]
+    }
+];
+
+const questionsTree = {
+    start: {
+        question: "Which of these symptoms is/are more compatible with your condition? (Select all that apply)",
+        options: [
+            { text: "Pain", symptom: "pain" },
+            { text: "Swelling", symptom: "swelling" },
+            { text: "Loss of Sensation", symptom: "sensation" },
+            { text: "Loss of Strength", symptom: "strength" }
+        ],
+        multiSelect: true, // Allows multiple selections
+        next: "follow_up"
+    },
+    follow_up: {
+        question: "Which area corresponds to your symptoms? (Select one)",
+        options: [
+            { text: "Area 1", symptom: "area1" },
+            { text: "Area 2", symptom: "area2" },
+            { text: "Area 3", symptom: "area3" }
+        ],
+        multiSelect: false // Enforces single selection
+    },
+    loss_sensibility: {
+        question: "How would you describe the loss of sensibility?",
+        options: [
+            { text: "Pins-and-needles sensation", symptom: "pins_and_needles" },
+            { text: "Tingling or Numbness", symptom: "numbness" },
+            { text: "Inability to feel moderate blows", symptom: "blows" },
+            { text: "Complete inability to feel", symptom: "noSensation" }
+        ],
+        multiSelect: false
+    },
+    loss_strength: {
+        question: "How would you describe the loss of strength?",
+        options: [
+            { text: "Morning stiffness that reduces during the day", symptom: "morningStiffness" },
+            { text: "Non-temporary weakness", symptom: "nonTemporaryWeakness" },
+            { text: "Inability to grip objects", symptom: "noGripStrength" },
+            { text: "Inability to move the hand", symptom: "noHandMovement" }
+        ],
+        multiSelect: false
+    }
+};
+
+
+
+function renderQuestion(questionNode, containerId, callback) {
+    const container = document.getElementById(containerId);
+    let html = `<h2>${questionNode.question}</h2>`;
+
+    questionNode.options.forEach((option, index) => {
+        html += `<button id="${containerId}-option${index}" class="question-button">${option.text}</button>`;
     });
-}
 
-function oneSelection(symptom, buttonId, arr) {
-    for (let i = 0; i < arr.length; i++) {
-        const button = document.getElementById(arr[i]['buttonId']);
-        if (arr[i]['buttonId'] === buttonId) {
-            symptoms[symptom] = true;
-            button.style.backgroundColor = "#4CAF50"; // Highlight selected button
-            button.style.color = "white";
-        } else {
-            symptoms[arr[i]['symptom']] = false;
-            button.style.backgroundColor = ""; // Reset styles
-            button.style.color = "";
-        }
-    }
-}
+    // Add the "Next" button
+    html += `<p></p><button id="${containerId}-nextButton" class="next-button">Next</button>`;
 
+    container.innerHTML = html;
 
-function toggleSymptom(symptom, buttonId) {
-    symptoms[symptom] = !symptoms[symptom]; // Toggle the symptom state
-
-    // Change the button's appearance based on its selection state
-    const button = document.getElementById(buttonId);
-    if (symptoms[symptom]) {
-        button.style.backgroundColor = "#4CAF50"; // Example color for selected
-        button.style.color = "white";
-    } else {
-        button.style.backgroundColor = ""; // Revert to default
-        button.style.color = "";
-    }
-}
-
-// Questions
-function firstQuestion(parts) {
-    LeftContainerHTML(`
-        <h1>Questionnaire</h1>
-        <p>${num}. Which of these symptoms is/are more compatible with your condition?</p>
-        <button id="painButton">Pain</button>
-        <button id="swellingButton">Swelling</button>
-        <button id="sensationButton">Loss of Sensation</button>
-        <button id="strengthButton">Loss of Strength</button>
-        <p></p>
-        <button id="nextButton">Next</button>
-    `);
-
-    // Attach event listeners to symptom buttons
-    document.getElementById("painButton").onclick = () => toggleSymptom("pain", "painButton");
-    document.getElementById("swellingButton").onclick = () => toggleSymptom("swelling", "swellingButton");
-    document.getElementById("sensationButton").onclick = () => toggleSymptom("sensation", "sensationButton");
-    document.getElementById("strengthButton").onclick = () => toggleSymptom("strength", "strengthButton");
-}
-
-function lossSensibilityQuestion(parts) {
-    LeftContainerHTML(`
-        <h1>Questionnaire</h1>
-        <p>${num}. How would you describe the loss of sensibility?</p>
-        <button id="pins-and-needlesButton">A pins-and-needles sensation that disappears when shaking the ${parts}</button>
-        <button id="numbnessButton">Tingling or Numbness</button>
-        <button id="blowsButton">Inability to feel moderate blows to the ${parts}</button>
-        <button id="noSensationButton">Complete inability to feel the ${parts} even when moving it</button>
-        <p></p>
-        <button class="next-button" id="nextButton">Next</button>
-    `);
-
-    let arr = [
-        {
-            symptom: "pins_and_needles",
-            buttonId: "pins-and-needlesButton",
-            state: false,
-        },
-        {
-            symptom: "numbness",
-            buttonId: "numbnessButton",
-            state: false,
-        },
-        {
-            symptom: "blows",
-            buttonId: "blowsButton",
-            state: false,
-        },
-        {
-            symptom: "noSensation",
-            buttonId: "noSensationButton",
-            state: false,
-        }
-    ]
-
-    // Attach event listeners to symptom buttons
-    document.getElementById("pins-and-needlesButton").onclick = () => oneSelection("pins_and_needles", "pins-and-needlesButton", arr);
-    document.getElementById("numbnessButton").onclick = () => oneSelection("numbness", "numbnessButton", arr);
-    document.getElementById("blowsButton").onclick = () => oneSelection("blows", "blowsButton", arr);
-    document.getElementById("noSensationButton").onclick = () => oneSelection("noSensation", "noSensationButton", arr);
-}
-
-function lossStrengthQuestion(parts) {
-    LeftContainerHTML(`
-        <h1>Questionnaire</h1>
-        <p>${num}. How would you describe the loss of strength?</p>
-        <button id="morningStiffnessButton">Morning stiffness that reduces throughout the day</button>
-        <button id="nonTemporaryWeaknessButton">Slight non-temporary weakness</button>
-        <button id="noGripStengthButton">Inability to grip objects with strength</button>
-        <button id="noHandMovementButton">Inability to move the hand</button>
-        <p></p>
-        <button class="next-button" id="nextButton">Next</button>
-    `);
-
-    let arr = [
-        {
-            symptom: "morningStiffness",
-            buttonId: "morningStiffnessButton",
-            state: false,
-        },
-        {
-            symptom: "nonTemporaryWeakness",
-            buttonId: "nonTemporaryWeaknessButton",
-            state: false,
-        },
-        {
-            symptom: "noGripStrength",
-            buttonId: "noGripStengthButton",
-            state: false,
-        },
-        {
-            symptom: "noHandMovement",
-            buttonId: "noHandMovementButton",
-            state: false,
-        }
-    ]
-
-    // Attach event listeners to symptom buttons
-    document.getElementById("morningStiffnessButton").onclick = () => oneSelection("morningStiffness", "morningStiffnessButton", arr);
-    document.getElementById("nonTemporaryWeaknessButton").onclick = () => oneSelection("nonTemporaryWeakness", "nonTemporaryWeaknessButton", arr);
-    document.getElementById("noGripStengthButton").onclick = () => oneSelection("noGripStength", "noGripStengthButton", arr);
-    document.getElementById("noHandMovementButton").onclick = () => oneSelection("noHandMovement", "noHandMovementButton", arr);
-    
-}
-
-async function Questionnaire(parts) {
-    if (parts && parts.length === 1) 
-    { // Add check to ensure `parts` is defined and not empty
-        for (let i = 0; i < parts.length; i++) 
-        {
-            if (["Index Finger", "Middle Finger", "Thumb", "Wrist and Hand"].includes(parts[i]))
-            {
-                // Ask the first question
-                firstQuestion(parts); // Pass `parts` to firstQuestion
-                await waitForNextButton();
-                num++;
-                if (symptoms["sensation"]) 
-                { // Check if sensation was selected
-                    lossSensibilityQuestion(parts); // Pass `parts` to lossSensibilityQuestion
-                    await waitForNextButton();
-                    num++;
+    questionNode.options.forEach((option, index) => {
+        const button = document.getElementById(`${containerId}-option${index}`);
+        button.onclick = () => {
+            if (questionNode.multiSelect) {
+                state.symptoms[option.symptom] = !state.symptoms[option.symptom];
+                if (state.symptoms[option.symptom]) {
+                    button.style.backgroundColor = "#4CAF50";
+                    button.style.color = "white";
+                } else {
+                    button.style.backgroundColor = "";
+                    button.style.color = "";
                 }
+            } else {
+                questionNode.options.forEach((opt, i) => {
+                    const otherButton = document.getElementById(`${containerId}-option${i}`);
+                    state.symptoms[opt.symptom] = false;
+                    otherButton.style.backgroundColor = "";
+                    otherButton.style.color = "";
+                });
+                state.symptoms[option.symptom] = true;
+                button.style.backgroundColor = "#4CAF50";
+                button.style.color = "white";
+            }
+        };
+    });
 
-                if (symptoms["strength"])
-                {
-                    lossStrengthQuestion(parts);
-                    await waitForNextButton();
-                    num++;
-                }
+    const nextButton = document.getElementById(`${containerId}-nextButton`);
+    nextButton.onclick = () => {
+        if (callback) callback();
+    };
+}
+
+function renderFollowUpQuestions() {
+    const selectedSymptoms = Object.keys(state.symptoms).filter(symptom => state.symptoms[symptom]);
+
+    const followUpNodes = [];
+
+    // if (selectedSymptoms.includes("sensation") || selectedSymptoms.includes("strength")) {
+    //     followUpNodes.push(questionsTree.follow_up);
+    // }
+
+    selectedSymptoms.forEach(symptom => {
+        if (symptom === "sensation") followUpNodes.push(questionsTree.loss_sensibility);
+        if (symptom === "strength") followUpNodes.push(questionsTree.loss_strength);
+    });
+
+    if (followUpNodes.length > 0) {
+        let currentIndex = 0;
+
+        function showNextFollowUp() {
+            if (currentIndex < followUpNodes.length) {
+                renderQuestion(followUpNodes[currentIndex], "leftContainer", () => {
+                    currentIndex++;
+                    showNextFollowUp();
+                });
+            } else {
+                transitionToDiagnosis(); // Diagnose after follow-ups
             }
         }
-    } 
-    else 
-    {
-        console.error("No parts selected or parts is undefined.");
+
+        showNextFollowUp();
+    } else {
+        transitionToDiagnosis(); // Diagnose directly if no follow-ups
     }
 }
+
+
+// Function to diagnose the most likely pathology
+function diagnosePathology() {
+    const userSymptoms = Object.keys(state.symptoms).filter(symptom => state.symptoms[symptom]); // Extract selected symptoms
+    const partsSelected = state.partsSelected; // Use partsSelected from the state
+
+    let candidates = [];
+    let fallbackCandidates = [];
+
+    pathologies.forEach(pathology => {
+        let symptomScore = 0;
+        let partScore = 0;
+
+        // Calculate symptom score (percentage of matching symptoms)
+        pathology.symptoms.forEach(symptom => {
+            if (userSymptoms.includes(symptom)) {
+                symptomScore++;
+            }
+        });
+
+        const symptomPercentage = (symptomScore / pathology.symptoms.length) * 100;
+
+        // Calculate part score (percentage of matching parts)
+        pathology.parts.forEach(part => {
+            if (partsSelected.includes(part)) {
+                partScore++;
+            }
+        });
+
+        const partPercentage = (partScore / pathology.parts.length) * 100;
+
+        // Prioritize pathologies matching at least one selected part
+        if (partScore > 0) {
+            candidates.push({
+                pathology: pathology.name,
+                symptomPercentage: symptomPercentage.toFixed(2),
+                partPercentage: partPercentage.toFixed(2),
+                overallPercentage: ((symptomPercentage + partPercentage) / 2).toFixed(2),
+                matchesParts: true
+            });
+        } else {
+            // Fallback: Include pathologies with no matching parts only if no others match
+            fallbackCandidates.push({
+                pathology: pathology.name,
+                symptomPercentage: symptomPercentage.toFixed(2),
+                partPercentage: 0,
+                overallPercentage: symptomPercentage.toFixed(2),
+                matchesParts: false
+            });
+        }
+    });
+
+    // Sort candidates by overall percentage in descending order
+    candidates.sort((a, b) => b.overallPercentage - a.overallPercentage);
+
+    // If no candidates match selected parts, consider fallback candidates
+    if (candidates.length === 0) {
+        fallbackCandidates.sort((a, b) => b.overallPercentage - a.overallPercentage);
+        return {
+            message: "No pathologies match the selected parts. Based on symptoms, the best match is:",
+            details: fallbackCandidates[0]
+        };
+    }
+
+    // Return the best match from candidates
+    return {
+        message: `The most likely diagnosis is ${candidates[0].pathology}.`,
+        details: candidates[0]
+    };
+}
+
+// Integrate with transitionToDiagnosis
+function transitionToDiagnosis() {
+    const diagnosis = diagnosePathology(); // Run the diagnosis algorithm
+    const leftContainer = document.getElementById("leftContainer");
+
+    // Display the diagnosis results
+    leftContainer.innerHTML = `
+        <h1 style="font-size: 60px;">Preliminary Diagnosis</h1>
+        <p style="font-size: 18px">${diagnosis.message}</p>
+        ${
+            diagnosis.details
+                ? `
+        <h2 style="font-size: 32px;">Details:</h2>
+        <ul style="font-size: 18px">
+            <li><strong>Pathology:</strong> ${diagnosis.details.pathology}</li>
+            <li><strong>Symptom Match:</strong> ${diagnosis.details.symptomPercentage}%</li>
+            <li><strong>Part Match:</strong> ${diagnosis.details.partPercentage}%</li>
+            <li><strong>Overall Match:</strong> ${diagnosis.details.overallPercentage}%</li>
+        </ul>
+        `
+                : ""
+        }
+        <p>This tool provides general information based on user-inputted data and is not a substitute for professional medical advice.
+        \nPlease consult a qualified healthcare professional for an accurate diagnosis and treatment.</p>
+    `;
+}
+
+
+// Function to start the questionnaire
+function startQuestionnaire() {
+    if (state.partsSelected.length >= 1)
+    {
+        const questionNode = questionsTree.start;
+        renderQuestion(questionNode, "leftContainer", () => {
+            // Proceed to follow-up questions when "Next" is clicked
+            renderFollowUpQuestions();
+        });
+    }
+   
+}
+
 
 function LeftContainer() {
     let leftContainer = document.getElementById('leftContainer');
@@ -229,7 +296,7 @@ function LeftContainerHTML(string) {
     const doneButton = document.getElementById('doneButton');
     if (doneButton) {
         doneButton.addEventListener('click', function() {
-            Questionnaire(partsSelected);
+            startQuestionnaire();
         });
 
         // Style the done button
@@ -320,18 +387,18 @@ function onMouseClick(event) {
             if (selectedPart.material.color.getHexString() === '1a8bb9') {
                 selectedPart.material.color.set('#a6a6a6');
                 let name = selectedPart.name.replace(/_/g, " ");
-                partsSelected = partsSelected.filter(i => i !== name);
+                state.partsSelected = state.partsSelected.filter(i => i !== name);
                 console.log('Unselected part:', name);
             } else {
                 selectedPart.material = selectedPart.material.clone();
                 selectedPart.material.color.set('#1a8bb9');
                 let name = selectedPart.name.replace(/_/g, " ");
-                partsSelected.push(name);
+                state.partsSelected.push(name);
                 console.log('Selected part:', name);
             }
             LeftContainerHTML(`
                 <h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>
-                <p> Body parts selected: ${partsSelected.join(", ")}</p>
+                <p style="font-size: 20px"> Body parts selected: ${state.partsSelected.join(", ")}</p>
                 <button class="done-button" id="doneButton">Done</button>
             `);
         }
@@ -361,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('startButton').addEventListener('click', function() {
     LeftContainerHTML(`
         <h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>
-        <p> Body parts selected: ${partsSelected}</p>
+        <p style="font-size: 20px"> Body parts selected: ${state.partsSelected}</p>
         <button class="done-button" id="doneButton">Done</button>
     `);
     LeftContainer();
@@ -430,14 +497,4 @@ document.getElementById('startButton').addEventListener('click', function() {
     }
 });
 
-// Initialize Google Translate
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
 
-    setTimeout(function() {
-        styleGoogleTranslateDropdown();
-    }, 1000);
-}

@@ -3,23 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Services</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu" id="navMenu">
+        <nav class="nav-menu" id="nSavMenu">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="mission.html">Our Mission</a></li>
+                        <li><a href="values.html">Our Values</a></li>
+                        <li><a href="partnerships.html">Partnerships</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">What We Do</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
+                        <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
+                        <li><a href="community.html">Community Support</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="educational-resources.html">Educational Resources</a></li>
+                        <li><a href="research.html">Research & Development</a></li>
+                    </ul>
+                </li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
@@ -27,25 +50,35 @@
             <h1>Our Services</h1>
             <div class="service">
                 <h2>3D Symptom Checker</h2>
-                <p>Nuestro modelo 3D de última generación te permite identificar áreas de malestar y proporciona información sobre condiciones potenciales asociadas con esos síntomas. Es una forma intuitiva de comenzar a entender las señales de tu cuerpo.</p>
+                <p>Our state-of-the-art 3D model allows you to identify areas of discomfort and provides information about potential conditions associated with those symptoms. It is an intuitive way to begin understanding your body's signals.</p>
             </div>
             <div class="service">
                 <h2>Medical Knowledge Base</h2>
-                <p>Accede a una vasta biblioteca de artículos médicos, escritos y revisados por profesionales, que cubren una amplia gama de temas, desde enfermedades comunes hasta condiciones médicas especializadas.</p>
+                <p>Access a vast library of medical articles, written and reviewed by professionals, covering a wide range of topics from common illnesses to specialized medical conditions.</p>
             </div>
             <div class="service">
                 <h2>Community Support</h2>
-                <p>Únete a una comunidad de personas afines que comparten experiencias y consejos. Ya sea que busques apoyo o quieras ofrecerlo, nuestra comunidad está aquí para ayudarte.</p>
+                <p>Join a community of like-minded individuals who share experiences and advice. Whether you're looking for support or want to offer it, our community is here to help you.</p>
             </div>
             <div class="service">
                 <h2>Personalized Recommendations</h2>
-                <p>Basado en los síntomas que selecciones, recibe sugerencias personalizadas de artículos y próximos pasos, incluyendo cuándo buscar asesoramiento médico profesional.</p>
+                <p>Based on the symptoms you select, receive personalized suggestions for articles and next steps, including when to seek professional medical advice.</p>
             </div>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

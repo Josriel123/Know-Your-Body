@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Symptom Checker - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Symptom Checker</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Who We Are</a>
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
-                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">What We Do</a>
+                    <a href="#" class="dropdown-toggle">What We Do</a>
                     <ul class="dropdown-menu">
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -40,20 +40,33 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
         <section class="symptom-checker-section">
             <h1>3D Symptom Checker</h1>
-            <p>El <strong>3D Symptom Checker</strong> de Know Your Body es una herramienta innovadora diseñada para ayudarte a identificar áreas de malestar en tu cuerpo de manera visual y precisa. Utilizando un modelo 3D interactivo, puedes señalar cualquier área que te cause dolor o incomodidad y obtener información relevante sobre posibles causas.</p>
-            <p>Esta herramienta es intuitiva y fácil de usar, permitiéndote explorar diferentes partes del cuerpo y ver cómo los síntomas pueden estar relacionados con diversas condiciones médicas. Es un primer paso útil para comprender mejor tus síntomas y decidir si necesitas buscar atención médica profesional.</p>
-            <p>Además, el 3D Symptom Checker está integrado con nuestra base de datos de conocimientos médicos y recursos educativos, ofreciendo una visión más completa y contextualizada sobre tu salud.</p>
+            <p>The <strong>3D Symptom Checker</strong> by Know Your Body is an innovative tool designed to help you identify areas of discomfort in your body in a visual and precise way. Using an interactive 3D model, you can pinpoint any area causing pain or discomfort and obtain relevant information about possible causes.</p>
+            <p>This tool is intuitive and easy to use, allowing you to explore different parts of the body and see how symptoms may be related to various medical conditions. It is a helpful first step in better understanding your symptoms and deciding whether you need to seek professional medical attention.</p>
+            <p>Additionally, the 3D Symptom Checker is integrated with our medical knowledge base and educational resources, offering a more comprehensive and contextualized view of your health.</p>
             <a href="symptom-checker.html" class="cta-button">Try the 3D Symptom Checker</a>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

@@ -163,7 +163,7 @@ html, body {
 }
 
 .start-button:hover {
-    background-color: aquamarine;
+    background-color: grey;
 }
 
 #threejs-container {
@@ -238,6 +238,43 @@ html, body {
     overflow-y: scroll; /* Ensure scroll bar works */
 }
 
+.done-button {
+    padding: 5% 7%;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 130px;
+}
 .done-button:hover {
-    background-color: aquamarine;
+    background-color: grey;
+}
+
+.question-button {
+    padding: 2% 4%;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.question-button:hover {
+    background-color: grey;
+}
+
+.answer-buttons {
+    margin-top: 100px;
+    background-color: #3498db;
+}
+
+.next-button {
+    margin-top: 10%;
+    padding: 2% 4%;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.next-button:hover {
+    background-color: grey;
 }
