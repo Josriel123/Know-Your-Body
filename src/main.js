@@ -10,7 +10,6 @@ let raycaster = new Raycaster();
 let mouse = new Vector2();
 let partsSelected = [];
 let symptoms = {
-    next: false,
     pain: false,
     swelling: false,
     sensation: false,
@@ -18,36 +17,41 @@ let symptoms = {
     pins_and_needles: false,
     numbness: false,
     blows: false,
-    noSensation: false
-
+    noSensation: false,
+    morningStiffness: false,
+    nonTemporaryWeakness: false,
+    noGripStrength: false,
+    noHandMovement: false
 };
 let num = 1;
 
-function firstQuestion(parts) {
-    LeftContainerHTML(`
-        <h1>Questionnaire</h1>
-        <p>${num}. Which of these symptoms is/are more compatible with your condition?</p>
-        <button class="pain-button" id="painButton">Pain</button>
-        <button class="swelling-button" id="swellingButton">Swelling</button>
-        <button class="sensation-button" id="sensationButton">Loss of Sensation</button>
-        <button class="strength-button" id="strengthButton">Loss of Strength</button>
-        <p></p>
-        <button class="next-button" id="nextButton">Next</button>
-    `);
-
-    // Attach event listeners to symptom buttons
-    document.getElementById("painButton").onclick = () => toggleSymptom("pain", "painButton");
-    document.getElementById("swellingButton").onclick = () => toggleSymptom("swelling", "swellingButton");
-    document.getElementById("sensationButton").onclick = () => toggleSymptom("sensation", "sensationButton");
-    document.getElementById("strengthButton").onclick = () => toggleSymptom("strength", "strengthButton");
-
-    // Attach event listener to Next button
-    document.getElementById("nextButton").onclick = () => {
-        symptoms["next"] = true;
-        num++;
-        Questionnaire(parts); // Ensure `parts` is passed here
-    };
+function waitForNextButton() {
+    return new Promise((resolve) => {
+        const nextButton = document.getElementById("nextButton");
+        if (nextButton) {
+            nextButton.onclick = () => {
+                symptoms["next"] = true;
+                resolve(); // Resolves the Promise when "Next" is clicked
+            };
+        }
+    });
 }
+
+function oneSelection(symptom, buttonId, arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const button = document.getElementById(arr[i]['buttonId']);
+        if (arr[i]['buttonId'] === buttonId) {
+            symptoms[symptom] = true;
+            button.style.backgroundColor = "#4CAF50"; // Highlight selected button
+            button.style.color = "white";
+        } else {
+            symptoms[arr[i]['symptom']] = false;
+            button.style.backgroundColor = ""; // Reset styles
+            button.style.color = "";
+        }
+    }
+}
+
 
 function toggleSymptom(symptom, buttonId) {
     symptoms[symptom] = !symptoms[symptom]; // Toggle the symptom state
@@ -63,49 +67,140 @@ function toggleSymptom(symptom, buttonId) {
     }
 }
 
+// Questions
+function firstQuestion(parts) {
+    LeftContainerHTML(`
+        <h1>Questionnaire</h1>
+        <p>${num}. Which of these symptoms is/are more compatible with your condition?</p>
+        <button id="painButton">Pain</button>
+        <button id="swellingButton">Swelling</button>
+        <button id="sensationButton">Loss of Sensation</button>
+        <button id="strengthButton">Loss of Strength</button>
+        <p></p>
+        <button id="nextButton">Next</button>
+    `);
+
+    // Attach event listeners to symptom buttons
+    document.getElementById("painButton").onclick = () => toggleSymptom("pain", "painButton");
+    document.getElementById("swellingButton").onclick = () => toggleSymptom("swelling", "swellingButton");
+    document.getElementById("sensationButton").onclick = () => toggleSymptom("sensation", "sensationButton");
+    document.getElementById("strengthButton").onclick = () => toggleSymptom("strength", "strengthButton");
+}
+
 function lossSensibilityQuestion(parts) {
     LeftContainerHTML(`
         <h1>Questionnaire</h1>
         <p>${num}. How would you describe the loss of sensibility?</p>
-        <button class="pins-and-needles-button" id="pins-and-needlesButton">A pins-and-needles sensation that disappears when shaking the ${parts}</button>
-        <button class="numbness-button" id="numbnessButton">Tingling or Numbness</button>
-        <button class="blows-button" id="blowsButton">Inability to feel moderate blows to the ${parts}</button>
-        <button class="no_sensation-button" id="noSensationButton">Complete inability to feel the ${parts} even when moving it</button>
+        <button id="pins-and-needlesButton">A pins-and-needles sensation that disappears when shaking the ${parts}</button>
+        <button id="numbnessButton">Tingling or Numbness</button>
+        <button id="blowsButton">Inability to feel moderate blows to the ${parts}</button>
+        <button id="noSensationButton">Complete inability to feel the ${parts} even when moving it</button>
         <p></p>
         <button class="next-button" id="nextButton">Next</button>
     `);
 
-        // Attach event listeners to symptom buttons
-        document.getElementById("pins-and-needlesButton").onclick = () => toggleSymptom("pins_and_needles", "pins-and-needlesButton");
-        document.getElementById("numbnessButton").onclick = () => toggleSymptom("numbness", "numbnessButton");
-        document.getElementById("blowsButton").onclick = () => toggleSymptom("blows", "blowsButton");
-        document.getElementById("noSensationButton").onclick = () => toggleSymptom("noSensation", "noSensationButton");
-    
-        // Attach event listener to Next button
-        document.getElementById("nextButton").onclick = () => {
-            symptoms["next"] = true;
-            num++;
-            Questionnaire(parts); // Ensure `parts` is passed here
+    let arr = [
+        {
+            symptom: "pins_and_needles",
+            buttonId: "pins-and-needlesButton",
+            state: false,
+        },
+        {
+            symptom: "numbness",
+            buttonId: "numbnessButton",
+            state: false,
+        },
+        {
+            symptom: "blows",
+            buttonId: "blowsButton",
+            state: false,
+        },
+        {
+            symptom: "noSensation",
+            buttonId: "noSensationButton",
+            state: false,
         }
+    ]
+
+    // Attach event listeners to symptom buttons
+    document.getElementById("pins-and-needlesButton").onclick = () => oneSelection("pins_and_needles", "pins-and-needlesButton", arr);
+    document.getElementById("numbnessButton").onclick = () => oneSelection("numbness", "numbnessButton", arr);
+    document.getElementById("blowsButton").onclick = () => oneSelection("blows", "blowsButton", arr);
+    document.getElementById("noSensationButton").onclick = () => oneSelection("noSensation", "noSensationButton", arr);
 }
 
-function Questionnaire(parts) {
-    if (parts && parts.length === 1) { // Add check to ensure `parts` is defined and not empty
-        for (let i = 0; i < parts.length; i++) {
-            if (["Index Finger", "Middle Finger", "Thumb", "Wrist and Hand"].includes(parts[i])) {
-                // Ask the first question
+function lossStrengthQuestion(parts) {
+    LeftContainerHTML(`
+        <h1>Questionnaire</h1>
+        <p>${num}. How would you describe the loss of strength?</p>
+        <button id="morningStiffnessButton">Morning stiffness that reduces throughout the day</button>
+        <button id="nonTemporaryWeaknessButton">Slight non-temporary weakness</button>
+        <button id="noGripStengthButton">Inability to grip objects with strength</button>
+        <button id="noHandMovementButton">Inability to move the hand</button>
+        <p></p>
+        <button class="next-button" id="nextButton">Next</button>
+    `);
 
-                if (num == 1) {
-                    firstQuestion(parts); // Pass `parts` to firstQuestion
-                } else {
-                    if (symptoms["sensation"]) { // Check if sensation was selected
-                        lossSensibilityQuestion(parts); // Pass `parts` to lossSensibilityQuestion
-                        num++;
-                    }
+    let arr = [
+        {
+            symptom: "morningStiffness",
+            buttonId: "morningStiffnessButton",
+            state: false,
+        },
+        {
+            symptom: "nonTemporaryWeakness",
+            buttonId: "nonTemporaryWeaknessButton",
+            state: false,
+        },
+        {
+            symptom: "noGripStrength",
+            buttonId: "noGripStengthButton",
+            state: false,
+        },
+        {
+            symptom: "noHandMovement",
+            buttonId: "noHandMovementButton",
+            state: false,
+        }
+    ]
+
+    // Attach event listeners to symptom buttons
+    document.getElementById("morningStiffnessButton").onclick = () => oneSelection("morningStiffness", "morningStiffnessButton", arr);
+    document.getElementById("nonTemporaryWeaknessButton").onclick = () => oneSelection("nonTemporaryWeakness", "nonTemporaryWeaknessButton", arr);
+    document.getElementById("noGripStengthButton").onclick = () => oneSelection("noGripStength", "noGripStengthButton", arr);
+    document.getElementById("noHandMovementButton").onclick = () => oneSelection("noHandMovement", "noHandMovementButton", arr);
+    
+}
+
+async function Questionnaire(parts) {
+    if (parts && parts.length === 1) 
+    { // Add check to ensure `parts` is defined and not empty
+        for (let i = 0; i < parts.length; i++) 
+        {
+            if (["Index Finger", "Middle Finger", "Thumb", "Wrist and Hand"].includes(parts[i]))
+            {
+                // Ask the first question
+                firstQuestion(parts); // Pass `parts` to firstQuestion
+                await waitForNextButton();
+                num++;
+                if (symptoms["sensation"]) 
+                { // Check if sensation was selected
+                    lossSensibilityQuestion(parts); // Pass `parts` to lossSensibilityQuestion
+                    await waitForNextButton();
+                    num++;
+                }
+
+                if (symptoms["strength"])
+                {
+                    lossStrengthQuestion(parts);
+                    await waitForNextButton();
+                    num++;
                 }
             }
         }
-    } else {
+    } 
+    else 
+    {
         console.error("No parts selected or parts is undefined.");
     }
 }
