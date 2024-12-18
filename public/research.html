@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research & Development - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Research</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Who We Are</a>
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
-                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">What We Do</a>
+                    <a href="#" class="dropdown-toggle">What We Do</a>
                     <ul class="dropdown-menu">
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -40,19 +40,32 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
         <section class="research-development-section">
             <h1>Research & Development</h1>
-            <p>En Know Your Body, la <strong>Research & Development</strong> es fundamental para mejorar continuamente nuestras herramientas y servicios. Estamos dedicados a la investigación para integrar las últimas innovaciones tecnológicas y avances médicos en nuestra plataforma.</p>
-            <p>Colaboramos con instituciones académicas y expertos en salud para desarrollar nuevas funcionalidades y mejorar la precisión de nuestro modelo 3D. Descubre cómo nuestra investigación está configurando el futuro del acceso a la información médica.</p>
+            <p>At Know Your Body, <strong>Research & Development</strong> is essential to continuously improve our tools and services. We are dedicated to research to integrate the latest technological innovations and medical advances into our platform.</p>
+            <p>We collaborate with academic institutions and health experts to develop new functionalities and enhance the accuracy of our 3D model. Discover how our research is shaping the future of access to medical information.</p>
             <a href="research.html" class="cta-button">Learn About Our Research</a>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

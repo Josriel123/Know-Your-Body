@@ -21,7 +21,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
                         <li><a href="team.html">Our Team</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
@@ -33,7 +32,7 @@
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -41,40 +40,21 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
+
     <div class="content">
         <div class="left-container" id="leftContainer">
-            <p class="slogan">
-                Point Your Pain
-            </p>
-        
-            <p class="slogan-description">
-                To identify and heal with our revolutionary 3D human model
-            </p>
+            <p class="slogan">Point Your Pain</p>
+            <p class="slogan-description">To identify and heal with our revolutionary 3D human model</p>
         </div>
-
         <div class="right-container" id="rightContainer">
-            <button class="start-button" id="startButton">
-                Start
-            </button>
+            <button class="start-button" id="startButton">Start</button>
         </div>
     </div>
-    <div id="chatbot-container">
-        <button id="open-chatbot">Chat with us!</button>
-        <div id="chatbot-window" style="display: none;">
-            <div id="chatbot-header">
-                <span>Welcome to Know Your Body!</span>
-                <button id="close-chatbot">X</button>
-            </div>
-            <div id="chatbot-messages"></div>
-            <div id="chatbot-input-container">
-                <input type="text" id="chatbot-input" placeholder="Ask about our tools..." />
-                <button id="send-chatbot">Send</button>
-            </div>
-        </div>
-    </div>
-    
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

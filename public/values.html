@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Values - Know Your Body</title>
-    <link rel="stylesheet" href="/Style/style.css">
+    <title>Values</title>
+    <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
-    <header>
+    <header class="header" id="header">
         <div class="company-name">
             <a href="index.html">
-                <span class="know">KNOW</span> <span class="your-body">YOUR BODY</span>
+                <div class="know">KNOW</div>
+                <div class="your-body">YOUR BODY</div>
             </a>
         </div>
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#">Who We Are</a>
+                    <a href="#" class="dropdown-toggle">Who We Are</a>
                     <ul class="dropdown-menu">
                         <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="mission.html">Our Mission</a></li>
                         <li><a href="values.html">Our Values</a></li>
-                        <li><a href="team.html">Our Team</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">What We Do</a>
+                    <a href="#" class="dropdown-toggle">What We Do</a>
                     <ul class="dropdown-menu">
                         <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
                         <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
                         <li><a href="community.html">Community Support</a></li>
-                        <li><a href="recommendations.html">Personalized Recommendations</a></li>
+                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
                         <li><a href="educational-resources.html">Educational Resources</a></li>
                         <li><a href="research.html">Research & Development</a></li>
                     </ul>
@@ -40,23 +40,36 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact-us.html">Contact</a></li>
             </ul>
+
+            <!-- Google Translate Dropdown -->
+            <div id="google_translate_element"></div>
         </nav>
     </header>
     <main>
         <section class="values-section">
             <h1>Our Values</h1>
-            <p>En Know Your Body, nuestros valores fundamentales guían cada aspecto de nuestro trabajo:</p>
+            <p>At Know Your Body, our core values guide every aspect of our work:</p>
             <ul>
-                <li><strong>Innovación:</strong> Estamos comprometidos con la innovación tecnológica para ofrecer soluciones avanzadas en salud.</li>
-                <li><strong>Accesibilidad:</strong> Creemos en hacer la información médica accesible para todos, sin importar su ubicación o condición económica.</li>
-                <li><strong>Integridad:</strong> Operamos con total transparencia y ética, garantizando la confianza en nuestras herramientas y recursos.</li>
-                <li><strong>Empoderamiento:</strong> Nuestro objetivo es empoderar a las personas para que tomen decisiones informadas sobre su salud.</li>
+                <li><strong>Innovation:</strong> We are committed to technological innovation to provide advanced health solutions.</li>
+                <li><strong>Accessibility:</strong> We believe in making medical information accessible to everyone, regardless of location or economic condition.</li>
+                <li><strong>Integrity:</strong> We operate with complete transparency and ethics, ensuring trust in our tools and resources.</li>
+                <li><strong>Empowerment:</strong> Our goal is to empower people to make informed decisions about their health.</li>
             </ul>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
     </footer>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>
