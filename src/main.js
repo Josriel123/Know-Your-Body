@@ -10,50 +10,41 @@ let raycaster = new Raycaster();
 let mouse = new Vector2();
 const partsSelected = [];
 
-
-
 // Function to load the 3D Model with all its lighting and interactivity.
 function loadModel(cameraLight1) {
-    // Loading Spinner setup
     var loadingSpinner = document.getElementById('loadingSpinner');
     loadingSpinner.style.display = 'block';
 
-    // 3D Model Loader setup
     var loader = new GLTFLoader();
     var dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/');
     loader.setDRACOLoader(dracoLoader);
     loader.load('/Models/model.gltf', function(gltf) {
-        loadingSpinner.style.display = 'none'; // Hide spinner once the model is loaded
+        loadingSpinner.style.display = 'none';
         if (model) {
             scene.remove(model); // Remove previous model if it exists
         }
         model = gltf.scene;
         model.traverse(function (child) {
             if (child.isMesh) {
-                child.castShadow = true; // Enable shadows for the model
-                child.receiveShadow = true; // Enable shadows to be received by the model
+                child.castShadow = true;
+                child.receiveShadow = true;
             }
         });
         scene.add(model);
 
-        // Adjust model scale and position if needed
         model.scale.set(24, 24, 24);
         model.position.set(0, -2.5, 0);
 
-        // Render loop
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
         
-            // Correct position offset for cameraLight to follow the camera
-            const lightOffset = new THREE.Vector3(0, 1, 0).normalize().multiplyScalar(4.5); // Adjust these values as needed
+            const lightOffset = new THREE.Vector3(0, 1, 0).normalize().multiplyScalar(4.5);
             cameraLight.position.copy(camera.position).add(lightOffset);
-            
-            // Ensure light targets where the camera is looking
             cameraLight.target.position.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(11));
-            cameraLight.target.updateMatrixWorld(); // Important to update the target matrix
+            cameraLight.target.updateMatrixWorld();
         }
         
         animate();
@@ -62,20 +53,14 @@ function loadModel(cameraLight1) {
         console.error('Error loading model:', error);
     });
 
-    // Add OrbitControls
     controls = new OrbitControls(camera, renderer.domElement);
-
-    // Disable panning and zooming
     controls.enablePan = false;
     controls.enableZoom = false;
+    controls.minPolarAngle = Math.PI / 20;
+    controls.maxPolarAngle = Math.PI;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
-    // Set rotation limits (optional)
-    controls.minPolarAngle = Math.PI / 20; // Limit vertical rotation
-    controls.maxPolarAngle = Math.PI; // Limit vertical rotation
-    controls.enableDamping = true; // Enable smooth rotation
-    controls.dampingFactor = 0.05; // Damping factor for smooth rotation
-
-    // Handle window resize
     window.addEventListener('resize', onWindowResize);
 }
 
@@ -83,77 +68,99 @@ function onWindowResize() {
     var container = document.getElementById('threejs-container');
     renderer.setSize(container.clientWidth, container.clientHeight);
     camera.aspect = container.clientWidth / container.clientHeight;
-    console.log(container.clientWidth, container.clientHeight);
     camera.updateProjectionMatrix();
 }
 
 function onMouseClick(event) {
     const rect = renderer.domElement.getBoundingClientRect();
-    let matColor;
     
-    // Convert the mouse position to normalized device coordinates
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-    // Update the raycaster with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
-
-    // Calculate the intersects with the model's children (meshes)
     const intersects = raycaster.intersectObjects(model.children, true);
-    console.log(intersects[1].object);
-    //for (const i of intersects.object) {
-        //console.log(i);
-    //}
 
     if (intersects.length > 0) {
         const selectedPart = intersects[0].object; // The first intersected object
-
         
         if (selectedPart.isMesh) {
-
-            // Change the color of the selected part
-            if (selectedPart.material.color.getHexString() === '1a8bb9'){
+            if (selectedPart.material.color.getHexString() === '1a8bb9') {
                 selectedPart.material.color.set('#a6a6a6');
-                partsSelected.filter(i => i !== selectedPart)
+                const index = partsSelected.indexOf(selectedPart);
+                if (index > -1) {
+                    partsSelected.splice(index, 1);
+                }
                 console.log('Unselected part:', selectedPart.name);
-            }  
-            else {
-                // Clone the material if it's shared with other parts
+            } else {
                 selectedPart.material = selectedPart.material.clone();
                 selectedPart.material.color.set('#1a8bb9');
                 partsSelected.push(selectedPart);
                 console.log('Selected part:', selectedPart.name);
-
             }
         }
     }
 }
 
+// Create the "That's all" button and the questionnaire dynamically
+function createUI() {
+    const body = document.body;
 
+    // "That's all" button
+    const thatsAllButton = document.createElement('button');
+    thatsAllButton.id = 'thatsAllButton';
+    thatsAllButton.innerText = "That's all";
+    thatsAllButton.style.display = 'none';
+    body.appendChild(thatsAllButton);
 
-// Menu Dropdown Functionality
+    // Questionnaire
+    const questionnaire = document.createElement('div');
+    questionnaire.id = 'questionnaire';
+    questionnaire.style.display = 'none';
+    questionnaire.innerHTML = `
+        <h2>Answer these questions to determine the type of pain</h2>
+        <p>Where do you feel the pain?</p>
+        <input type="text" id="painLocation" placeholder="Enter location of pain">
+        <p>How intense is the pain?</p>
+        <input type="number" id="painIntensity" min="1" max="10" placeholder="Enter intensity from 1 to 10">
+        <button id="submitAnswers">Submit</button>
+    `;
+    body.appendChild(questionnaire);
+}
+
+// Handle the "That's all" button click
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
+    createUI();
 
-    dropdowns.forEach(function(dropdown) {
-        const toggle = dropdown.querySelector('.dropdown-toggle');
+    const thatsAllButton = document.getElementById('thatsAllButton');
+    const questionnaire = document.getElementById('questionnaire');
 
-        toggle.addEventListener('click', function(event) {
-            event.preventDefault();
-            dropdown.classList.toggle('active');
-        });
+    thatsAllButton.addEventListener('click', function() {
+        if (partsSelected.length > 0) {
+            questionnaire.style.display = 'block';
+            thatsAllButton.style.display = 'none';
+        } else {
+            alert("Please select at least one part of the body before proceeding.");
+        }
     });
 
-    // Close the dropdown when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.dropdown')) {
-            dropdowns.forEach(function(dropdown) {
-                dropdown.classList.remove('active');
-            });
+    document.getElementById('submitAnswers').addEventListener('click', function() {
+        const painLocation = document.getElementById('painLocation').value;
+        const painIntensity = document.getElementById('painIntensity').value;
+
+        if (!painLocation || !painIntensity) {
+            alert("Please answer all the questions.");
+        } else {
+            console.log("Pain location:", painLocation);
+            console.log("Pain intensity:", painIntensity);
+            alert("Thank you for your answers!");
+
+            questionnaire.style.display = 'none';
+            partsSelected.length = 0;
         }
     });
 });
 
+// Handle the start button to initialize the scene
 document.getElementById('startButton').addEventListener('click', function() {
     var leftContainer = document.getElementById('leftContainer');
     leftContainer.innerHTML = "<h1 class='instructions'>Select the part(s) of the body where you feel pain</h1>";
@@ -165,7 +172,8 @@ document.getElementById('startButton').addEventListener('click', function() {
     var rightContainer = document.getElementById('rightContainer');
     rightContainer.innerHTML = "<div id='threejs-container'><div id='loadingSpinner'></div></div>";
 
-    // Initialize Three.js scene if it hasn't been initialized yet
+    document.getElementById('thatsAllButton').style.display = 'block';
+
     if (!scene) {
         var container = document.getElementById('threejs-container');
         scene = new THREE.Scene();
@@ -179,7 +187,6 @@ document.getElementById('startButton').addEventListener('click', function() {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // Add lights
         var ambientLight = new THREE.AmbientLight(0x404040);
         scene.add(ambientLight);
 
@@ -187,19 +194,18 @@ document.getElementById('startButton').addEventListener('click', function() {
         topLight.position.set(0, 10, 0);
         topLight.castShadow = true;
         topLight.shadow.mapSize.width = 4096;
-        topLight.shadow.mapSize.height = 4096;
         topLight.shadow.camera.left = -10;
         topLight.shadow.camera.right = 10;
         topLight.shadow.camera.top = 10;
         topLight.shadow.camera.bottom = -10;
         topLight.shadow.camera.near = 1;
         topLight.shadow.camera.far = 20;
-        topLight.shadow.bias = -0.001; // Adjust this value to reduce shadow artifacts
+        topLight.shadow.bias = -0.001;
         scene.add(topLight);
 
         cameraLight = new THREE.DirectionalLight(0xadd8e6, 1.2);
-        camera.position.set(0, 2.5, 5); // Positioned above and looking down at the model
-        camera.lookAt(0, 0, 0); // Ensure the camera is looking at the center of the scene or model
+        camera.position.set(0, 2.5, 5);
+        camera.lookAt(0, 0, 0);
         cameraLight.castShadow = true;
         cameraLight.shadow.mapSize.width = 4096;
         cameraLight.shadow.mapSize.height = 4096;
@@ -209,27 +215,69 @@ document.getElementById('startButton').addEventListener('click', function() {
         cameraLight.shadow.camera.bottom = -10;
         cameraLight.shadow.camera.near = 1;
         cameraLight.shadow.camera.far = 20;
-        cameraLight.shadow.bias = -0.001; // Adjust this as needed
+        cameraLight.shadow.bias = -0.001;
         scene.add(cameraLight);
 
-
-        // Load the 3D Model
         loadModel(cameraLight);
         onWindowResize();
 
-
-        // Add event listener for mouse clicks
         renderer.domElement.addEventListener('click', onMouseClick, false);
     } else {
-        // Update the renderer size
         onWindowResize();
-        // Load the 3D Model
         loadModel(cameraLight);
         renderer.domElement.addEventListener('click', onMouseClick, false);
     }
 
-    // Update controls
     if (controls) {
-        controls.update(); // Required for controls to work properly
+        controls.update();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const openChatbot = document.getElementById("open-chatbot");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const closeChatbot = document.getElementById("close-chatbot");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const sendChatbot = document.getElementById("send-chatbot");
+
+    openChatbot.addEventListener("click", () => {
+        chatbotWindow.style.display = "flex";
+    });
+
+    closeChatbot.addEventListener("click", () => {
+        chatbotWindow.style.display = "none";
+    });
+
+    sendChatbot.addEventListener("click", () => {
+        const userMessage = chatbotInput.value.trim();
+        if (userMessage) {
+            addMessage("You", userMessage);
+            chatbotInput.value = "";
+
+            // Mock response for now, replace with API call later
+            setTimeout(() => {
+                const botResponse = generateResponse(userMessage);
+                addMessage("Bot", botResponse);
+            }, 1000);
+        }
+    });
+
+    function addMessage(sender, message) {
+        const messageElement = document.createElement("div");
+        messageElement.textContent = `${sender}: ${message}`;
+        chatbotMessages.appendChild(messageElement);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    function generateResponse(userMessage) {
+        // Replace this with actual backend logic or API integration
+        if (userMessage.toLowerCase().includes("symptom checker")) {
+            return "The 3D Symptom Checker helps you identify areas of discomfort visually. Check it out in the 'What We Do' section.";
+        } else if (userMessage.toLowerCase().includes("recommendation")) {
+            return "Our Personalized Recommendations provide tailored advice based on your symptoms and medical history.";
+        } else {
+            return "I'm here to assist you! Ask me about any tool or service in 'Know Your Body.'";
+        }
     }
 });
