@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.3.4"
+    "vite": "^5.4.11"
   },
   "dependencies": {
     "draco3d": "^1.5.7",

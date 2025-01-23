@@ -55,6 +55,35 @@
             <button class="start-button" id="startButton">Start</button>
         </div>
     </div>
+
+    <div id="chatbot-container">
+        <button id="open-chatbot">Chat with us!</button>
+        <div id="chatbot-window" style="display: none;">
+            <div id="chatbot-header">
+                <span>Welcome to Know Your Body!</span>
+                <button id="close-chatbot">X</button>
+            </div>
+            <div id="chatbot-messages"></div>
+            <div id="chatbot-input-container">
+                <input type="text" id="chatbot-input" placeholder="Ask about our tools..." />
+                <button id="send-chatbot">Send</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+            }, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- External JS file -->
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>
