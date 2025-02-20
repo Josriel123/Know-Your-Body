@@ -21,17 +21,20 @@ const pathologies = [
     {
         name: "Carpal Tunnel Syndrome",
         symptoms: ["sensation", "strength", "pain", "swelling"],
-        parts: ["Wrist and Hand", "Thumb", "Index Finger", "Middle Finger"]
+        parts: ["Wrist and Hand", "Thumb", "Index Finger", "Middle Finger"],
+        disqualify: ["loss_sensation"]
     },
     {
         name: "De Quervain's Tenosynovitis",
         symptoms: ["pain", "swelling"],
-        parts: ["thumb", "wrist"]
+        parts: ["thumb", "wrist"],
+        disqualify: ["loss_sensation"]
     },
     {
         name: "Trigger Finger",
         symptoms: ["strength", "sensation"],
-        parts: ["thumb", "index finger", "middle finger", "ring finger", "pinky"]
+        parts: ["thumb", "index finger", "middle finger", "ring finger", "pinky"],
+        disqualify: ["loss_sensation"]
     }
 ];
 
@@ -57,6 +60,7 @@ const questionsTree = {
         multiSelect: false // Enforces single selection
     },
     loss_sensibility: {
+        areas: ""
         question: "How would you describe the loss of sensibility?",
         options: [
             { text: "Pins-and-needles sensation", symptom: "pins_and_needles" },
