@@ -60,7 +60,7 @@ const questionsTree = {
         multiSelect: false // Enforces single selection
     },
     loss_sensibility: {
-        areas: ""
+        areas: "",
         question: "How would you describe the loss of sensibility?",
         options: [
             { text: "Pins-and-needles sensation", symptom: "pins_and_needles" },
