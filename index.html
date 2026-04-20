@@ -3,87 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Know Your Body</title>
+    <title>Know Your Body — Point Your Pain</title>
+    <meta name="description" content="Interactive 3D body model with AI-powered symptom diagnosis. Identify and understand your pain with Know Your Body.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Style/style.css"/>
 </head>
 <body>
+    <!-- Header -->
     <header class="header" id="header">
-        <div class="company-name">
-            <a href="index.html">
-                <div class="know">KNOW</div>
-                <div class="your-body">YOUR BODY</div>
-            </a>
-        </div>
+        <a class="logo" id="logo-link">
+            <span class="logo-know" data-i18n="app.know">KNOW</span>
+            <span class="logo-body" data-i18n="app.body">YOUR BODY</span>
+        </a>
+
         <nav class="nav-menu" id="navMenu">
             <ul>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Who We Are</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-i18n="nav.whoWeAre">Who We Are ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="mission.html">Our Mission</a></li>
-                        <li><a href="values.html">Our Values</a></li>
-                        <li><a href="partnerships.html">Partnerships</a></li>
+                        <li><a href="about-us.html" data-i18n="nav.aboutUs">About Us</a></li>
+                        <li><a href="team.html" data-i18n="nav.team">Our Team</a></li>
+                        <li><a href="mission.html" data-i18n="nav.mission">Our Mission</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">What We Do</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-i18n="nav.whatWeDo">What We Do ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
-                        <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
-                        <li><a href="community.html">Community Support</a></li>
-                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
-                        <li><a href="educational-resources.html">Educational Resources</a></li>
-                        <li><a href="research.html">Research & Development</a></li>
+                        <li><a href="symptom-checker.html" data-i18n="nav.symptomChecker">3D Symptom Checker</a></li>
+                        <li><a href="knowledge-base.html" data-i18n="nav.knowledgeBase">Medical Knowledge Base</a></li>
+                        <li><a href="community.html" data-i18n="nav.community">Community Support</a></li>
                     </ul>
                 </li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact-us.html">Contact</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="contact-us.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
             </ul>
 
-            <!-- Google Translate Dropdown -->
-            <div id="google_translate_element"></div>
+            <!-- Language Switcher -->
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" id="langBtn">
+                    <span id="langFlag">🌐</span>
+                    <span id="langLabel">EN</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="en">🇺🇸 English</button>
+                    <button class="lang-option" data-lang="es">🇪🇸 Español</button>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <div class="content">
-        <div class="left-container" id="leftContainer">
-            <p class="slogan">Point Your Pain</p>
-            <p class="slogan-description">To identify and heal with our revolutionary 3D human model</p>
-        </div>
-        <div class="right-container" id="rightContainer">
-            <button class="start-button" id="startButton">Start</button>
-        </div>
-    </div>
-
-    <div id="chatbot-container">
-        <button id="open-chatbot">Chat with us!</button>
-        <div id="chatbot-window" style="display: none;">
-            <div id="chatbot-header">
-                <span>Welcome to Know Your Body!</span>
-                <button id="close-chatbot">X</button>
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Landing View -->
+        <section id="view-landing" class="view view-landing active">
+            <div class="landing-content">
+                <h1 class="landing-title">
+                    <span data-i18n="landing.point">Point</span><br>
+                    <span data-i18n="landing.your">Your </span><span data-i18n="landing.pain">Pain</span>
+                </h1>
+                <p class="landing-subtitle" data-i18n="landing.subtitle">
+                    Identify and understand your symptoms with our interactive 3D body model and AI-powered diagnosis.
+                </p>
+                <button class="btn-primary" id="btnStart" data-i18n="landing.cta">Get Started →</button>
             </div>
-            <div id="chatbot-messages"></div>
-            <div id="chatbot-input-container">
-                <input type="text" id="chatbot-input" placeholder="Ask about our tools..." />
-                <button id="send-chatbot">Send</button>
+        </section>
+
+        <!-- App View (Selector + 3D Viewer) -->
+        <section id="view-app" class="view view-app">
+            <div class="sidebar" id="sidebar">
+                <!-- Dynamic content rendered by JS -->
             </div>
-        </div>
-    </div>
-    
+            <div class="viewer" id="viewer">
+                <div id="threejs-container">
+                    <div id="loading-spinner" class="spinner-3d" style="display:none;"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-            }, 'google_translate_element');
-        }
-    </script>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- 3D Hover Tooltip -->
+    <div id="tooltip-3d" class="tooltip-3d"></div>
 
-    <!-- External JS file -->
+    <!-- App Script -->
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>

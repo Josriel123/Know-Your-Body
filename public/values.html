@@ -3,73 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Values</title>
+    <title>Our Values — Know Your Body</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Style/style.css"/>
+    <style>
+        .page-container {
+            max-width: 800px;
+            margin: 100px auto 40px auto;
+            padding: 0 24px;
+        }
+        .page-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #a0a0A0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-card {
+            background: var(--card-bg, #1e1f24);
+            border: 1px solid var(--border, #2a2c33);
+            border-radius: 16px;
+            padding: 40px;
+        }
+        .text-card p strong {
+            color: var(--accent, #62e59e);
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .text-card { padding: 24px; }
+        }
+    </style>
 </head>
 <body>
     <header class="header" id="header">
-        <div class="company-name">
-            <a href="index.html">
-                <div class="know">KNOW</div>
-                <div class="your-body">YOUR BODY</div>
-            </a>
-        </div>
-        <nav class="nav-menu" id="navMenu">
+        <a href="/" class="logo">
+            <span class="logo-know">KNOW</span>
+            <span class="logo-body">YOUR BODY</span>
+        </a>
+        <nav class="nav-menu">
             <ul>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Who We Are</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="mission.html">Our Mission</a></li>
-                        <li><a href="values.html">Our Values</a></li>
-                        <li><a href="partnerships.html">Partnerships</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">What We Do</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="symptom-checker.html">3D Symptom Checker</a></li>
-                        <li><a href="knowledge-base.html">Medical Knowledge Base</a></li>
-                        <li><a href="community.html">Community Support</a></li>
-                        <li><a href="personalized-recommendations.html">Personalized Recommendations</a></li>
-                        <li><a href="educational-resources.html">Educational Resources</a></li>
-                        <li><a href="research.html">Research & Development</a></li>
-                    </ul>
-                </li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact-us.html">Contact</a></li>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/services.html" class="nav-link">Services</a></li>
+                <li><a href="/contact-us.html" class="nav-link">Contact</a></li>
             </ul>
-
-            <!-- Google Translate Dropdown -->
-            <div id="google_translate_element"></div>
         </nav>
     </header>
-    <main>
-        <section class="values-section">
-            <h1>Our Values</h1>
-            <p>At Know Your Body, our core values guide every aspect of our work:</p>
-            <ul>
+
+    <main class="page-container">
+        <h1 class="page-title">Our Values</h1>
+        <div class="text-card">
+            <p style="color: var(--text-secondary, #a1a1aa); font-size: 16px; line-height: 1.6; margin-bottom: 24px;">At Know Your Body, our core values guide every aspect of our work:</p>
+            <ul style="color: var(--text-secondary, #a1a1aa); font-size: 16px; line-height: 1.6; margin-bottom: 24px; padding-left: 20px;">
                 <li><strong>Innovation:</strong> We are committed to technological innovation to provide advanced health solutions.</li>
                 <li><strong>Accessibility:</strong> We believe in making medical information accessible to everyone, regardless of location or economic condition.</li>
                 <li><strong>Integrity:</strong> We operate with complete transparency and ethics, ensuring trust in our tools and resources.</li>
                 <li><strong>Empowerment:</strong> Our goal is to empower people to make informed decisions about their health.</li>
             </ul>
-        </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2024 Know Your Body. All Rights Reserved.</p>
-    </footer>
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
