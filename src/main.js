@@ -6,9 +6,8 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 // ============================================================
 // CONFIGURATION
 // ============================================================
-const GEMINI_API_KEY = '***REMOVED***';
-const GEMINI_MODEL = 'gemini-2.5-flash';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+// Gemini is called server-side (api/diagnose.js), so the API key never reaches the browser.
+const DIAGNOSIS_ENDPOINT = '/api/diagnose';
 
 // ============================================================
 // TRANSLATIONS (EN + ES)
@@ -514,72 +513,33 @@ function renderStepDetails(sidebar) {
 }
 
 // ============================================================
-// AI DIAGNOSIS — GEMINI API
+// AI DIAGNOSIS — GEMINI API (through /api/diagnose)
 // ============================================================
-function buildPrompt() {
-  const partsStr = state.partsSelected.map(p => bodyPartName(p)).join(', ');
-  const symptomsStr = state.selectedSymptoms.map(s => t(`symptom.${s}`)).join(', ');
-  const severityStr = t(`severity.${state.severity}`);
-  const durationStr = t(`duration.${state.duration}`);
-  const langName = state.lang === 'es' ? 'Spanish' : 'English';
-
-  return `You are a medical information assistant specializing in musculoskeletal conditions of the upper extremity (shoulder, arm, hand, and fingers).
-
-A user has reported the following:
-- Affected body parts: ${partsStr}
-- Symptoms: ${symptomsStr}
-- Severity: ${severityStr}
-- Duration: ${durationStr}
-
-Based on this information, provide the 3 most likely diagnoses.
-
-Respond ONLY with a valid JSON object in this exact format:
-{
-  "diagnoses": [
-    {
-      "name": "Condition Name",
-      "confidence": 85,
-      "description": "A clear 2-3 sentence description of the condition.",
-      "symptoms_explained": "Brief explanation of how the reported symptoms relate to this condition.",
-      "treatment": ["Treatment 1", "Treatment 2", "Treatment 3"],
-      "when_to_see_doctor": "When the patient should seek professional care.",
-      "severity": "mild"
-    }
-  ],
-  "general_advice": "General health advice for the user based on their symptoms."
-}
-
-Important rules:
-- confidence should be a realistic percentage (0-100) based on how well the symptoms and body parts match.
-- severity must be exactly "mild", "moderate", or "severe".
-- treatment should have 3-4 practical suggestions.
-- Respond in ${langName} language for all text content.
-- Be medically accurate but understandable to a layperson.
-- DO NOT use any unescaped line breaks or newlines inside your string values. Use single spacing.
-- Do not include markdown formatting, only raw JSON.`;
+// The browser only sends the user's selections, as labels in the current language.
+// server/diagnose.js builds the prompt and calls Gemini with the server-side key.
+function buildDiagnosisRequest() {
+  return {
+    parts: state.partsSelected.map(p => bodyPartName(p)),
+    symptoms: state.selectedSymptoms.map(s => t(`symptom.${s}`)),
+    severity: t(`severity.${state.severity}`),
+    duration: t(`duration.${state.duration}`),
+    lang: state.lang === 'es' ? 'es' : 'en',
+  };
 }
 
 async function requestDiagnosis() {
   try {
-    const response = await fetch(GEMINI_URL, {
+    const response = await fetch(DIAGNOSIS_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: buildPrompt() }] }],
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 8192,
-          responseMimeType: "application/json"
-        }
-      })
+      body: JSON.stringify(buildDiagnosisRequest())
     });
 
     if (!response.ok) {
       throw new Error(`API responded with status ${response.status}`);
     }
 
-    const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const { text } = await response.json();
 
     if (!text) throw new Error('Empty response from AI');
 

@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local secrets (copy .env.example to .env.local)
+.env
+.env.*
+!.env.example
+
+# Vercel CLI
+.vercel
