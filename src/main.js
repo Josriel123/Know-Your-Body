@@ -78,6 +78,7 @@ const i18n = {
     'toast.comingSoon': '🚧 This area is coming soon — not yet available.',
     'toast.comingSoonShort': 'Coming soon',
     'toast.selectPart': 'Please select at least one body area first.',
+    'toast.sampleResults': '⚠️ AI diagnosis unavailable — showing sample results.',
     'error.title': 'Something went wrong',
     'error.subtitle': 'Could not connect to the AI service. Please try again.',
     'error.retry': 'Retry',
@@ -157,6 +158,7 @@ const i18n = {
     'toast.comingSoon': '🚧 Esta zona estará disponible próximamente.',
     'toast.comingSoonShort': 'Próximamente',
     'toast.selectPart': 'Por favor selecciona al menos una zona del cuerpo primero.',
+    'toast.sampleResults': '⚠️ Diagnóstico IA no disponible — mostrando resultados de ejemplo.',
     'error.title': 'Algo salió mal',
     'error.subtitle': 'No se pudo conectar con el servicio de IA. Por favor, inténtalo de nuevo.',
     'error.retry': 'Reintentar',
@@ -559,7 +561,7 @@ async function requestDiagnosis() {
     console.error('Diagnosis error:', err);
     
     // Universal App Fallback - Never show crash screens to the user during demo
-    showToast(t('feedback.apiLimit', 'API or Parse Error detected. Displaying Mock Data.'), 'warning');
+    showToast(t('toast.sampleResults'));
     state.diagnosisResult = {
       diagnoses: [
         {
