@@ -25,7 +25,11 @@ Know Your Body is a web application that lets users visually identify where they
 Know-Your-Body/
 ├── index.html              # Main SPA entry point (landing + 3D checker)
 ├── src/
-│   └── main.js             # Core application logic (Three.js, AI pipeline, i18n)
+│   └── main.js             # Core application logic (Three.js, questionnaire, i18n)
+├── api/
+│   └── diagnose.js         # Vercel serverless function: POST /api/diagnose
+├── server/
+│   └── diagnose.js         # Builds the prompt and calls Gemini (server-side only)
 ├── public/
 │   ├── Models/             # GLTF/GLB 3D body models
 │   ├── draco/              # Draco mesh decompression workers
@@ -39,7 +43,9 @@ Know-Your-Body/
 │   ├── knowledge-base.html
 │   ├── community.html
 │   └── ...                 # Additional informational pages
-├── vite.config.js          # Vite bundler config
+├── vite.config.js          # Vite config (also serves /api/diagnose during local dev)
+├── vercel.json             # Function timeout for /api/diagnose
+├── .env.example            # Template for .env.local
 └── package.json
 ```
 
@@ -49,7 +55,7 @@ Know-Your-Body/
 
 - **Frontend:** Vanilla HTML5, CSS3, JavaScript (ES Modules)
 - **3D Rendering:** [Three.js](https://threejs.org/) v0.167 with GLTF + Draco loader
-- **AI Backend:** [Google Gemini API](https://ai.google.dev/) (`gemini-2.5-flash`)
+- **AI Backend:** [Google Gemini API](https://ai.google.dev/) (`gemini-2.5-flash`), called from a [Vercel](https://vercel.com/) serverless function so the API key never reaches the browser
 - **Bundler:** [Vite](https://vitejs.dev/) v8
 - **Typography:** Inter (Google Fonts)
 
@@ -59,7 +65,7 @@ Know-Your-Body/
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18+
+- [Node.js](https://nodejs.org/) 20.19+ or 22.12+ (required by Vite 8)
 - A valid [Google Gemini API key](https://aistudio.google.com/app/apikey)
 
 ### Installation
@@ -75,13 +81,18 @@ npm install
 
 ### Configuration
 
-Open `src/main.js` and replace the API key near the top of the file:
+The Gemini key lives only on the server. Copy the template and add your key:
 
-```js
-const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
+```bash
+cp .env.example .env.local        # macOS/Linux
+copy .env.example .env.local      # Windows
 ```
 
-> ⚠️ **Never commit your API key to a public repository.** For production, move the key to a backend proxy or use environment variables.
+```env
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+`.env.local` is gitignored. Keep the name `GEMINI_API_KEY`: a `VITE_` prefix would make Vite bundle the key into the browser code.
 
 ### Running Locally
 
@@ -89,13 +100,25 @@ const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
 npm run dev
 ```
 
-Then open [http://localhost:5173](http://localhost:5173) in your browser.
+Then open [http://localhost:5173](http://localhost:5173) in your browser. The dev server also answers `POST /api/diagnose` with the same code the Vercel function runs, so the AI diagnosis works locally. Without a key, the app falls back to sample results.
+
+To test the Gemini call on its own, without the browser:
+
+```bash
+node --env-file=.env.local test-api.js
+```
 
 ### Building for Production
 
 ```bash
 npm run build
 ```
+
+### Deploying to Vercel
+
+1. Import the repository in [Vercel](https://vercel.com/new). It detects Vite and deploys `api/diagnose.js` as a serverless function.
+2. In **Settings → Environment Variables**, add `GEMINI_API_KEY` for Production (and Preview, if you want AI results on preview deployments).
+3. Deploy. The site calls `/api/diagnose` on the same domain, so no other configuration is needed.
 
 ---
 
@@ -107,7 +130,7 @@ npm run build
    - Symptoms (pain, swelling, numbness, weakness, stiffness, clicking)
    - Severity (mild / moderate / severe)
    - Duration
-4. **Gemini API call** — a structured prompt sends the data and requests a JSON response with the top 3 diagnoses, confidence percentages, treatments, and general advice.
+4. **Gemini API call** — the browser sends the selections to `/api/diagnose`. The serverless function validates them, builds a structured prompt, and asks Gemini for a JSON response with the top 3 diagnoses, confidence percentages, treatments, and general advice.
 5. **Results are rendered** as animated diagnosis cards with SVG confidence rings.
 
 ---
